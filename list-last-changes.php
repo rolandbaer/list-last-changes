@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: List Last Changes
- * Plugin URI: http://www.rolandbaer.ch/
+ * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a wordpress installation.
- * Version: 0.3.0
+ * Version: 0.3.2
  * Author: Roland Bär
- * Author URI: http://www.rolandbaer.ch
+ * Author URI: http://www.rolandbaer.ch/
  * License: GPLv2
  */
  
