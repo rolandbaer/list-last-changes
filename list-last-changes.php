@@ -47,6 +47,8 @@ class ListLastChangesWidget extends WP_Widget {
 		//  Get the title of the widget and the specified number of elements
 		$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 		$number = empty($instance['number']) ? ' ' : $instance['number'];
+		$showpages = isset( $instance['showpages'] ) ? (bool) $instance['showpages'] : true;
+		$showposts = isset( $instance['showposts'] ) ? (bool) $instance['showposts'] : false;
 
 		echo '<aside id="list_last_changes_widget_1" class="widget list_last_changes_widget">' . "\n";
 		echo ' <h3 class="widget-title">' . $title . '</h3>' . "\n";
@@ -58,12 +60,21 @@ class ListLastChangesWidget extends WP_Widget {
 			if($i > 0) {
 				$excludePageIds = $excludePageIds . ",";
 			}
-			$excludePageIds = $excludePageIds . $excludePageIds[$i]->ID;
+			$excludePageIds = $excludePageIds . $excludePages[$i]->ID;
 		}			
-		
-		$mypages = $this->wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludeIds));
+
+		$excludePosts = get_posts(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true'));
+		$excludePostIds = "";
+		for($i = 0; $i < count($excludePosts); $i++) {
+			if($i > 0) {
+				$excludePostIds = $excludePostIds . ",";
+			}
+			$excludePostIds = $excludePostIds . $excludePosts[$i]->ID;
+		}			
+
+		$mypages = $showpages ? $this->wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludePageIds)) : array();
 		usort($mypages, 'sort_pages_by_date_desc');
-		$myposts = get_posts(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified'));
+		$myposts = $showposts ? get_posts(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'exclude' => $excludePostIds)) : array();
 		usort($mypages, 'sort_pages_by_date_desc');
 		$count = min(count($mypages) + count($myposts), $number);
 		$pagePos = 0;
@@ -93,18 +104,24 @@ class ListLastChangesWidget extends WP_Widget {
 		$instance = $old_instance;
 		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['number'] = strip_tags($new_instance['number']);
+		$instance['showpages'] = isset( $new_instance['showpages'] ) ? (bool) $new_instance['showpages'] : false;
+		$instance['showposts'] = isset( $new_instance['showposts'] ) ? (bool) $new_instance['showposts'] : false;
 	 
 		return $instance;
 	}
 
 	function form( $instance ) {
 		//  Assigns values
-		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Last Changes', 'number' => '5' ) );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Last Changes', 'number' => '5', 'showpages' => true, 'showposts' => false ) );
 		$title = strip_tags($instance['title']);
 		$number = strip_tags($instance['number']);
+		$showpages = strip_tags($instance['showpages']);
+		$showposts = strip_tags($instance['showposts']);
 		?>
 			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo __('Title'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" /></label></p>
 			<p><label for="<?php echo $this->get_field_id('number'); ?>"><?php echo __('Number'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo attribute_escape($number); ?>" /></label></p>
+			<p><input class="checkbox" id="<?php echo $this->get_field_id('showpages'); ?>" name="<?php echo $this->get_field_name('showpages'); ?>" type="checkbox" <?php checked( $showpages ); ?> /><label for="<?php echo $this->get_field_id('showpages'); ?>"><?php echo __('Show changed Pages'); ?></label></p>
+			<p><input class="checkbox" id="<?php echo $this->get_field_id('showposts'); ?>" name="<?php echo $this->get_field_name('showposts'); ?>" type="checkbox" <?php checked( $showposts ); ?> /><label for="<?php echo $this->get_field_id('showposts'); ?>"><?php echo __('Show changed Posts'); ?></label></p>
 		<?php
 	}
 	
