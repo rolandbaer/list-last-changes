@@ -3,13 +3,13 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a wordpress installation.
- * Version: 0.4.1
+ * Version: 0.5.0
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * License: GPLv2
  */
  
- /*  Copyright 2013  Roland Bär  (email : info@rolandbaer.ch)
+ /*  Copyright 2013-2018  Roland Bär  (email : info@rolandbaer.ch)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -52,20 +52,34 @@ class ListLastChangesWidget extends WP_Widget {
 		echo ' <h3 class="widget-title">' . $title . '</h3>' . "\n";
 		echo " <ul>\n";
 		
-		$exclude = $this->wp_get_pages(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'hierarchical' => 0));
-		$excludeIds = "";
-		for($i = 0; $i < count($exclude); $i++) {
+		$excludePages = $this->wp_get_pages(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'hierarchical' => 0));
+		$excludePageIds = "";
+		for($i = 0; $i < count($excludePages); $i++) {
 			if($i > 0) {
-				$excludeIds = $excludeIds . ",";
+				$excludePageIds = $excludePageIds . ",";
 			}
-			$excludeIds = $excludeIds . $exclude[$i]->ID;
+			$excludePageIds = $excludePageIds . $excludePageIds[$i]->ID;
 		}			
 		
 		$mypages = $this->wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludeIds));
 		usort($mypages, 'sort_pages_by_date_desc');
-		$count = min(count($mypages), $number);
-		for($i = 0; $i < $count; $i++) { 
-			$post = $mypages[$i];
+		$myposts = get_posts(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified'));
+		usort($mypages, 'sort_pages_by_date_desc');
+		$count = min(count($mypages) + count($myposts), $number);
+		$pagePos = 0;
+		$postPos = 0;
+		for($i = 0; $i < $count; $i++) {
+			$pageMod = $pagePos < count($mypages) ? $mypages[$pagePos]->post_modified : date("YYYY-MM-DD HH:MM:SS", 0);
+			$postMod = $postPos < count($myposts) ? $myposts[$postPos]->post_modified : date("YYYY-MM-DD HH:MM:SS", 0);
+			if($pageMod > $postMod) {
+				$post = $mypages[$pagePos];
+				$pagePos++;
+			}
+			else
+			{
+				$post = $myposts[$postPos];
+				$postPos++;
+			}
 			setup_postdata($post);	
 			echo '  <li class="list_last_changes_title">'. "\n" . '   <a href="' . get_page_link( $post->ID ) .'">' . $post->post_title . "</a>\n";
 			echo '   <span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>\n  </li>\n";
