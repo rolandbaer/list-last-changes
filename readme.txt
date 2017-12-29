@@ -1,8 +1,8 @@
 === List Last Changes ===
 Contributors: rbaer
-Tags: last changes, pages
+Tags: last changes, pages, posts
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=PRW4QXZ3DHWL6&lc=GB&item_name=List%20Last%20Changes%20Plugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted
-Requires at least: 3.0.0
+Requires at least: 4.6.0
 Tested up to: 4.9.1
 License: GPLv2 or later
 Stable tag: 0.5.0

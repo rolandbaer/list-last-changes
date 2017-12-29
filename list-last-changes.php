@@ -2,10 +2,11 @@
 /**
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
- * Description: Shows a list of the last changes of a wordpress installation.
+ * Description: Shows a list of the last changes of a wordpress site.
  * Version: 0.5.0
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
+ * Text Domain: list-last-changes
  * License: GPLv2
  */
  
@@ -28,9 +29,9 @@
 class ListLastChangesWidget extends WP_Widget {
 
 	function ListLastChangesWidget() {
-	    $widget_ops = array('classname' => 'widget_list_last_changes', 'description' => __('Shows a list of the last changes of a wordpress installation') );
+	    $widget_ops = array('classname' => 'widget_list_last_changes', 'description' => __('Shows a list of the last changes of a wordpress site', 'list-last-changes') );
          
-        $this->WP_Widget('list-last-changes-widget', __('List Last Changes'), $widget_ops);
+        $this->WP_Widget('list-last-changes-widget', __('List Last Changes', 'list-last-changes'), $widget_ops);
 	}
 
 	/**
@@ -118,10 +119,10 @@ class ListLastChangesWidget extends WP_Widget {
 		$showpages = strip_tags($instance['showpages']);
 		$showposts = strip_tags($instance['showposts']);
 		?>
-			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo __('Title'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" /></label></p>
-			<p><label for="<?php echo $this->get_field_id('number'); ?>"><?php echo __('Number'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo attribute_escape($number); ?>" /></label></p>
-			<p><input class="checkbox" id="<?php echo $this->get_field_id('showpages'); ?>" name="<?php echo $this->get_field_name('showpages'); ?>" type="checkbox" <?php checked( $showpages ); ?> /><label for="<?php echo $this->get_field_id('showpages'); ?>"><?php echo __('Show changed Pages'); ?></label></p>
-			<p><input class="checkbox" id="<?php echo $this->get_field_id('showposts'); ?>" name="<?php echo $this->get_field_name('showposts'); ?>" type="checkbox" <?php checked( $showposts ); ?> /><label for="<?php echo $this->get_field_id('showposts'); ?>"><?php echo __('Show changed Posts'); ?></label></p>
+			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo __('Title', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" /></label></p>
+			<p><label for="<?php echo $this->get_field_id('number'); ?>"><?php echo __('Number', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo attribute_escape($number); ?>" /></label></p>
+			<p><input class="checkbox" id="<?php echo $this->get_field_id('showpages'); ?>" name="<?php echo $this->get_field_name('showpages'); ?>" type="checkbox" <?php checked( $showpages ); ?> /><label for="<?php echo $this->get_field_id('showpages'); ?>"><?php echo __('Show changed Pages', 'list-last-changes'); ?></label></p>
+			<p><input class="checkbox" id="<?php echo $this->get_field_id('showposts'); ?>" name="<?php echo $this->get_field_name('showposts'); ?>" type="checkbox" <?php checked( $showposts ); ?> /><label for="<?php echo $this->get_field_id('showposts'); ?>"><?php echo __('Show changed Posts', 'list-last-changes'); ?></label></p>
 		<?php
 	}
 	
@@ -135,7 +136,7 @@ class ListLastChangesWidget extends WP_Widget {
 			parse_str($args, $r);
 		
 		$defaults = array('depth' => 0, 'show_date' => '', 'date_format' => get_option('date_format'),
-			'child_of' => 0, 'exclude' => "", 'title_li' => __('Pages'), 'echo' => 1, 'authors' => '', 'sort_column' => 'menu_order, post_title');
+			'child_of' => 0, 'exclude' => "", 'title_li' => 'Pages', 'echo' => 1, 'authors' => '', 'sort_column' => 'menu_order, post_title');
 		$r = array_merge($defaults, $r);
 		
 		$output = '';
