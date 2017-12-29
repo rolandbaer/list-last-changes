@@ -1,5 +1,5 @@
 === List Last Changes ===
-Contributors: rolandbaer
+Contributors: rbaer
 Tags: last changes, pages
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=PRW4QXZ3DHWL6&lc=GB&item_name=List%20Last%20Changes%20Plugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted
 Requires at least: 3.0.0
