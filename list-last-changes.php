@@ -2,8 +2,8 @@
 /**
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
- * Description: Shows a list of the last changes of a wordpress site.
- * Version: 0.5.0
+ * Description: Shows a list of the last changes of a WordPress site.
+ * Version: 0.6.0
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
@@ -29,7 +29,7 @@
 class ListLastChangesWidget extends WP_Widget {
 
 	function ListLastChangesWidget() {
-	    $widget_ops = array('classname' => 'widget_list_last_changes', 'description' => __('Shows a list of the last changes of a wordpress site', 'list-last-changes') );
+	    $widget_ops = array('classname' => 'widget_list_last_changes', 'description' => __('Shows a list of the last changes of a WordPress site', 'list-last-changes') );
          
         $this->WP_Widget('list-last-changes-widget', __('List Last Changes', 'list-last-changes'), $widget_ops);
 	}
@@ -162,25 +162,25 @@ function list_last_changes_register_widgets() {
 add_action( 'widgets_init', 'list_last_changes_register_widgets' );
 
 	
-	/**
-	 * Sort by modified date ascending
-	 */
-	function sort_pages_by_date($a, $b){
-		if ($a->post_modified == $b->post_modified)
-			return 0;
-		if ($a->post_modified < $b->post_modified)
-			return -1;
-		return 1;
-	}
+/**
+ * Sort by modified date ascending
+ */
+function sort_pages_by_date($a, $b) {
+	if ($a->post_modified == $b->post_modified)
+		return 0;
+	if ($a->post_modified < $b->post_modified)
+		return -1;
+	return 1;
+}
 
-	/**
-	 * Sort by modified date descending
-	 */
-	function sort_pages_by_date_desc($a, $b){
-		return sort_pages_by_date($a, $b) * -1;
-	}
-	
-	/**
+/**
+ * Sort by modified date descending
+ */
+function sort_pages_by_date_desc($a, $b) {
+	return sort_pages_by_date($a, $b) * -1;
+}
+
+/**
  * Register style sheet.
  */
 add_action( 'wp_enqueue_scripts', 'list_last_changes_register_plugin_styles' );

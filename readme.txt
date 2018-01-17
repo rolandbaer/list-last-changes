@@ -3,9 +3,9 @@ Contributors: rbaer
 Tags: last changes, pages, posts
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=PRW4QXZ3DHWL6&lc=GB&item_name=List%20Last%20Changes%20Plugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted
 Requires at least: 4.6.0
-Tested up to: 4.9.1
+Tested up to: 5.0.0
 License: GPLv2 or later
-Stable tag: 0.5.0
+Stable tag: 0.6.0
 
 Shows a list of the last changes in the widget area.
 
@@ -18,7 +18,7 @@ Additional features include:
 * Select the number of entries in the list
 * Define pages to be exluded
 
-= Exclude Page or Post =
+= Exclude page or post =
 To exclude a page or post from being listed in the widget do the following steps:
 
 1. Open the page or post you want to exclude for editing.
@@ -32,6 +32,11 @@ To include it again set the value to false or remove the custom field completely
 
 == Changelog ==
 
+= 0.6.0 =
+
+* Added Support for translations
+* Icon for the plugin directory created
+
 = 0.5.0 =
 
 * Added support for also showing recent changed posts (deactivated by default)
@@ -44,11 +49,11 @@ To include it again set the value to false or remove the custom field completely
 = 0.4.0 =
 
 * Added possibility to exclude pages listed in the widget.
-* Tested with Wordpress 4.2
+* Tested with WordPress 4.2
 
 = 0.3.2 =
 
-* Tested with Wordpress 4.0
+* Tested with WordPress 4.0
 
 = 0.3.1 =
 
@@ -67,13 +72,13 @@ To include it again set the value to false or remove the custom field completely
 
 1. Upload the `list-last-changes` folder to your `/wp-content/plugins/` directory
 2. Activate the plugin using the `Plugins` menu in WordPress
-3. Add Last Changes Widget to your page
+3. Add Last Changes widget to your page
 4. Adjust the Last Changes Options as you prefer them. 
 
 == Screenshots ==
 
-1. Configuration of the Widget
-2. Output of the Widget
+1. Configuration of the widget
+2. Output of the widget
 3. Enable custom fields on the page
 4. Add this custom field on a page to exclude it from being listed in the widget.
 
@@ -88,6 +93,6 @@ Because no questions were asked.
 * 0.5.0 Added support for also showing recent changed posts
 * 0.4.1 Bugfix for excluding hierarchical pages 
 * 0.4.0 Added possibility to exclude pages listed in the widget.
-* 0.3.2 Tested with Wordpress 4.0
+* 0.3.2 Tested with WordPress 4.0
 * 0.3.1 Changed Plugin Link
 * 0.3.0 First official release.
