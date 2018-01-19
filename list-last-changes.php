@@ -29,7 +29,7 @@
 class ListLastChangesWidget extends WP_Widget {
 
 	function ListLastChangesWidget() {
-	    $widget_ops = array('classname' => 'widget_list_last_changes', 'description' => __('Shows a list of the last changes of a WordPress site', 'list-last-changes') );
+	    $widget_ops = array('classname' => 'widget_list_last_changes', 'description' => __('Shows a list of the last changes of a WordPress site.', 'list-last-changes') );
          
         $this->WP_Widget('list-last-changes-widget', __('List Last Changes', 'list-last-changes'), $widget_ops);
 	}

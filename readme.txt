@@ -7,11 +7,11 @@ Tested up to: 5.0.0
 License: GPLv2 or later
 Stable tag: 0.6.0
 
-Shows a list of the last changes in the widget area.
+Shows a list of the last changes of a WordPress site.
 
 == Description ==
 
-Shows a list of the last changes in the widget area. This can include changed pages and/or posts (configurable)
+Shows a list of the last changes in the widget area. This can include changed pages and/or posts (configurable).
 
 Additional features include:
 
