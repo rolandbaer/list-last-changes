@@ -3,7 +3,7 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 0.6.0
+ * Version: 0.6.5
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
@@ -28,10 +28,10 @@
 
 class ListLastChangesWidget extends WP_Widget {
 
-	function ListLastChangesWidget() {
+	function __construct() {
 	    $widget_ops = array('classname' => 'widget_list_last_changes', 'description' => __('Shows a list of the last changes of a WordPress site.', 'list-last-changes') );
          
-        $this->WP_Widget('list-last-changes-widget', __('List Last Changes', 'list-last-changes'), $widget_ops);
+        parent::__construct('list-last-changes-widget', __('List Last Changes', 'list-last-changes'), $widget_ops);
 	}
 
 	/**
@@ -119,8 +119,8 @@ class ListLastChangesWidget extends WP_Widget {
 		$showpages = strip_tags($instance['showpages']);
 		$showposts = strip_tags($instance['showposts']);
 		?>
-			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo __('Title', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" /></label></p>
-			<p><label for="<?php echo $this->get_field_id('number'); ?>"><?php echo __('Number of shown changes', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo attribute_escape($number); ?>" /></label></p>
+			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo __('Title', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
+			<p><label for="<?php echo $this->get_field_id('number'); ?>"><?php echo __('Number of shown changes', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo esc_attr($number); ?>" /></label></p>
 			<p><input class="checkbox" id="<?php echo $this->get_field_id('showpages'); ?>" name="<?php echo $this->get_field_name('showpages'); ?>" type="checkbox" <?php checked( $showpages ); ?> /><label for="<?php echo $this->get_field_id('showpages'); ?>"><?php echo __('Show changed Pages', 'list-last-changes'); ?></label></p>
 			<p><input class="checkbox" id="<?php echo $this->get_field_id('showposts'); ?>" name="<?php echo $this->get_field_name('showposts'); ?>" type="checkbox" <?php checked( $showposts ); ?> /><label for="<?php echo $this->get_field_id('showposts'); ?>"><?php echo __('Show changed Posts', 'list-last-changes'); ?></label></p>
 		<?php

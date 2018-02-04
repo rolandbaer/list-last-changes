@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=PRW4Q
 Requires at least: 4.6.0
 Tested up to: 5.0.0
 License: GPLv2 or later
-Stable tag: 0.6.0
+Stable tag: 0.6.5
 
 Shows a list of the last changes of a WordPress site.
 
@@ -31,6 +31,10 @@ To exclude a page or post from being listed in the widget do the following steps
 To include it again set the value to false or remove the custom field completely.
 
 == Changelog ==
+
+= 0.6.5 =
+
+* Code cleanup (removed usage of deprecated functions)
 
 = 0.6.0 =
 
