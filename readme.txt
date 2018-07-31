@@ -4,8 +4,8 @@ Tags: last changes, pages, posts
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=PRW4QXZ3DHWL6&lc=GB&item_name=List%20Last%20Changes%20Plugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted
 Requires at least: 4.6.0
 Tested up to: 5.0.0
-License: GPLv2 or later
-Stable tag: 0.6.5
+License: GPLv3 or later
+Stable tag: 0.6.6
 
 Shows a list of the last changes of a WordPress site.
 
@@ -31,6 +31,11 @@ To exclude a page or post from being listed in the widget do the following steps
 To include it again set the value to false or remove the custom field completely.
 
 == Changelog ==
+
+= 0.6.6 =
+
+* Bugfix for sorting pages two times but not sorting posts
+* License set to GPLv3 (was mixture of V2 and V3 before)
 
 = 0.6.5 =
 
@@ -94,6 +99,9 @@ Because no questions were asked.
 
 == Upgrade Notice ==
 
+* 0.6.6 Bugfix for sorting posts
+* 0.6.5 Code cleanup
+* 0.6.0 Support for translations, Icon for the plugin directory
 * 0.5.0 Added support for also showing recent changed posts
 * 0.4.1 Bugfix for excluding hierarchical pages 
 * 0.4.0 Added possibility to exclude pages listed in the widget.
