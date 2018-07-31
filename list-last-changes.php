@@ -3,17 +3,17 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 0.6.5
+ * Version: 0.6.6
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
- * License: GPLv2
+ * License: GPLv3
  */
  
  /*  Copyright 2013-2018  Roland Bär  (email : info@rolandbaer.ch)
 
     This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
+    it under the terms of the GNU General Public License, version 3, as 
     published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
@@ -76,7 +76,7 @@ class ListLastChangesWidget extends WP_Widget {
 		$mypages = $showpages ? $this->wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludePageIds)) : array();
 		usort($mypages, 'sort_pages_by_date_desc');
 		$myposts = $showposts ? get_posts(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'exclude' => $excludePostIds)) : array();
-		usort($mypages, 'sort_pages_by_date_desc');
+		usort($myposts, 'sort_pages_by_date_desc');
 		$count = min(count($mypages) + count($myposts), $number);
 		$pagePos = 0;
 		$postPos = 0;
