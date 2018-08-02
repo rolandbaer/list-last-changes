@@ -5,6 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=PRW4Q
 Requires at least: 4.6.0
 Tested up to: 5.0.0
 License: GPLv3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Stable tag: 0.6.6
 
 Shows a list of the last changes of a WordPress site.
@@ -34,55 +35,10 @@ To include it again set the value to false or remove the custom field completely
 
 = 0.6.6 =
 
+*Release date: August 1, 2018*
+
 * Bugfix for sorting pages two times but not sorting posts
 * License set to GPLv3 (was mixture of V2 and V3 before)
-
-= 0.6.5 =
-
-* Code cleanup (removed usage of deprecated functions)
-
-= 0.6.0 =
-
-* Added Support for translations
-* Icon for the plugin directory created
-
-= 0.5.0 =
-
-* Added support for also showing recent changed posts (deactivated by default)
-* It's also possible to exclude posts from being listed in the widget.
-
-= 0.4.1 =
-
-* Bugfix for excluding hierarchical pages 
-
-= 0.4.0 =
-
-* Added possibility to exclude pages listed in the widget.
-* Tested with WordPress 4.2
-
-= 0.3.2 =
-
-* Tested with WordPress 4.0
-
-= 0.3.1 =
-
-* Changed Plugin link directly to official Web Page
-
-= 0.3.0 =
-
-* Changed to class
-* Added configuration dialog for number of entries and title
-
-= 0.2.0 =
-
-* First usage on own website
-
-== Installation ==
-
-1. Upload the `list-last-changes` folder to your `/wp-content/plugins/` directory
-2. Activate the plugin using the `Plugins` menu in WordPress
-3. Add Last Changes widget to your page
-4. Adjust the Last Changes Options as you prefer them. 
 
 == Screenshots ==
 
@@ -97,14 +53,3 @@ To include it again set the value to false or remove the custom field completely
 
 Because no questions were asked.
 
-== Upgrade Notice ==
-
-* 0.6.6 Bugfix for sorting posts
-* 0.6.5 Code cleanup
-* 0.6.0 Support for translations, Icon for the plugin directory
-* 0.5.0 Added support for also showing recent changed posts
-* 0.4.1 Bugfix for excluding hierarchical pages 
-* 0.4.0 Added possibility to exclude pages listed in the widget.
-* 0.3.2 Tested with WordPress 4.0
-* 0.3.1 Changed Plugin Link
-* 0.3.0 First official release.
