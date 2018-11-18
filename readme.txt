@@ -6,7 +6,7 @@ Requires at least: 4.6.0
 Tested up to: 5.0.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 0.6.6
+Stable tag: 0.7.0
 
 Shows a list of the last changes of a WordPress site.
 
@@ -18,6 +18,7 @@ Additional features include:
 
 * Select the number of entries in the list
 * Define pages to be exluded
+* Shortcode support
 
 = Exclude page or post =
 To exclude a page or post from being listed in the widget do the following steps:
@@ -31,14 +32,24 @@ To exclude a page or post from being listed in the widget do the following steps
 
 To include it again set the value to false or remove the custom field completely.
 
+= Shortcode =
+To show the list of the last changes via shortcode use the following syntax:
+
+[list_last_changes number='7' showpages='true' showposts='true' /]
+
+The Attribute 'number' defines the number of entries shown.
+With the attributes 'showpages' and 'showposts' changed pages and/or posts are included.
+
+Other than with the Widget with the sortcode is no title written. if a title is needed it has to be defined by hand in front of the shortcode.
+
 == Changelog ==
 
-= 0.6.6 =
+= 0.7.0 =
 
-*Release date: August 1, 2018*
+*Release date: November 18, 2018*
 
-* Bugfix for sorting pages two times but not sorting posts
-* License set to GPLv3 (was mixture of V2 and V3 before)
+* Added support for shortcode
+* some refactorings
 
 == Screenshots ==
 

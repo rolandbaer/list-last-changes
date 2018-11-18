@@ -3,7 +3,7 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 0.6.6
+ * Version: 0.7.0
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
@@ -29,9 +29,9 @@
 class ListLastChangesWidget extends WP_Widget {
 
 	function __construct() {
-	    $widget_ops = array('classname' => 'widget_list_last_changes', 'description' => __('Shows a list of the last changes of a WordPress site.', 'list-last-changes') );
-         
-        parent::__construct('list-last-changes-widget', __('List Last Changes', 'list-last-changes'), $widget_ops);
+		$widget_ops = array('classname' => 'widget_list_last_changes', 'description' => __('Shows a list of the last changes of a WordPress site.', 'list-last-changes') );
+
+		parent::__construct('list-last-changes-widget', __('List Last Changes', 'list-last-changes'), $widget_ops);
 	}
 
 	/**
@@ -44,7 +44,7 @@ class ListLastChangesWidget extends WP_Widget {
 	 */
 	function widget( $args, $instance ) {
 		extract($args);
-	 
+
 		//  Get the title of the widget and the specified number of elements
 		$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 		$number = empty($instance['number']) ? ' ' : $instance['number'];
@@ -53,16 +53,21 @@ class ListLastChangesWidget extends WP_Widget {
 
 		echo '<aside id="list_last_changes_widget_1" class="widget list_last_changes_widget">' . "\n";
 		echo ' <h3 class="widget-title">' . $title . '</h3>' . "\n";
-		echo " <ul>\n";
+		echo ListLastChangesWidget::generate_list($number, $showpages, $showposts);
+		echo "</aside>\n";	
+	}
+
+	public static function generate_list($number, $showpages, $showposts) {
+		$content = " <ul>\n";
 		
-		$excludePages = $this->wp_get_pages(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'hierarchical' => 0));
+		$excludePages = ListLastChangesWidget::wp_get_pages(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'hierarchical' => 0));
 		$excludePageIds = "";
 		for($i = 0; $i < count($excludePages); $i++) {
 			if($i > 0) {
 				$excludePageIds = $excludePageIds . ",";
 			}
 			$excludePageIds = $excludePageIds . $excludePages[$i]->ID;
-		}			
+		}
 
 		$excludePosts = get_posts(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true'));
 		$excludePostIds = "";
@@ -71,9 +76,9 @@ class ListLastChangesWidget extends WP_Widget {
 				$excludePostIds = $excludePostIds . ",";
 			}
 			$excludePostIds = $excludePostIds . $excludePosts[$i]->ID;
-		}			
+		}
 
-		$mypages = $showpages ? $this->wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludePageIds)) : array();
+		$mypages = $showpages ? ListLastChangesWidget::wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludePageIds)) : array();
 		usort($mypages, 'sort_pages_by_date_desc');
 		$myposts = $showposts ? get_posts(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'exclude' => $excludePostIds)) : array();
 		usort($myposts, 'sort_pages_by_date_desc');
@@ -93,12 +98,12 @@ class ListLastChangesWidget extends WP_Widget {
 				$postPos++;
 			}
 			setup_postdata($post);	
-			echo '  <li class="list_last_changes_title">'. "\n" . '   <a href="' . get_page_link( $post->ID ) .'">' . $post->post_title . "</a>\n";
-			echo '   <span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>\n  </li>\n";
+			$content = $content . '  <li class="list_last_changes_title">'. "\n" . '   <a href="' . get_page_link( $post->ID ) .'">' . $post->post_title . "</a>\n";
+			$content = $content . '   <span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>\n  </li>\n";
 		}
-		
-		echo " </ul>\n";
-		echo "</aside>\n";	
+
+		$content = $content . " </ul>\n";
+		return $content;
 	}
 
 	function update( $new_instance, $old_instance ) {
@@ -107,7 +112,7 @@ class ListLastChangesWidget extends WP_Widget {
 		$instance['number'] = strip_tags($new_instance['number']);
 		$instance['showpages'] = isset( $new_instance['showpages'] ) ? (bool) $new_instance['showpages'] : false;
 		$instance['showposts'] = isset( $new_instance['showposts'] ) ? (bool) $new_instance['showposts'] : false;
-	 
+
 		return $instance;
 	}
 
@@ -125,32 +130,32 @@ class ListLastChangesWidget extends WP_Widget {
 			<p><input class="checkbox" id="<?php echo $this->get_field_id('showposts'); ?>" name="<?php echo $this->get_field_name('showposts'); ?>" type="checkbox" <?php checked( $showposts ); ?> /><label for="<?php echo $this->get_field_id('showposts'); ?>"><?php echo __('Show changed Posts', 'list-last-changes'); ?></label></p>
 		<?php
 	}
-	
+
 	/**
 	 * Get Pages
 	 */
-	function wp_get_pages($args = '') {
+	static function wp_get_pages($args = '') {
 		if ( is_array($args) )
 			$r =  &$args;
 		else
 			parse_str($args, $r);
-		
+
 		$defaults = array('depth' => 0, 'show_date' => '', 'date_format' => get_option('date_format'),
 			'child_of' => 0, 'exclude' => "", 'title_li' => 'Pages', 'echo' => 1, 'authors' => '', 'sort_column' => 'menu_order, post_title');
 		$r = array_merge($defaults, $r);
-		
+
 		$output = '';
 		$current_page = 0;
-		
+
 		// sanitize, mostly to keep spaces out
 		$r['exclude'] = preg_replace('[^0-9,]', '', $r['exclude']);
-		
+
 		// Allow plugins to filter an array of excluded pages
 		$r['exclude'] = implode(',', apply_filters('wp_list_pages_excludes', explode(',', $r['exclude'])));
-		
+
 		// Query pages.
 		$pages = get_pages($r);
-		
+
 		return $pages;
 	}
 }
@@ -160,8 +165,8 @@ function list_last_changes_register_widgets() {
 }
 
 add_action( 'widgets_init', 'list_last_changes_register_widgets' );
+add_shortcode( 'list_last_changes', 'list_last_changes_shortcode_funct' );
 
-	
 /**
  * Sort by modified date ascending
  */
@@ -191,4 +196,18 @@ add_action( 'wp_enqueue_scripts', 'list_last_changes_register_plugin_styles' );
 function list_last_changes_register_plugin_styles() {
 	wp_register_style( 'list-last-changes', plugins_url( 'list-last-changes/css/list-last-changes.css' ) );
 	wp_enqueue_style( 'list-last-changes' );
+}
+
+function list_last_changes_shortcode_funct($atts ) {
+	$a = shortcode_atts( array(
+		'number' => '5',
+		'showpages' => 'true',
+		'showposts' => 'false',
+	), $atts );
+
+	$number = empty($a['number']) ? ' ' : $a['number'];
+	$showpages = $a['showpages'] === 'true';
+	$showposts = $a['showposts'] === 'true';
+
+	return ListLastChangesWidget::generate_list($number, $showpages, $showposts);
 }

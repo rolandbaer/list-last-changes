@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 0.6.6 =
+
+*Release date: August 1, 2018*
+
+* Bugfix for sorting pages two times but not sorting posts
+* License set to GPLv3 (was mixture of V2 and V3 before)
+
 = 0.6.5 =
 
 *Release date: February 2, 2018*
