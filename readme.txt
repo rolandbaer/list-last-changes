@@ -12,13 +12,12 @@ Shows a list of the last changes of a WordPress site.
 
 == Description ==
 
-Shows a list of the last changes in the widget area. This can include changed pages and/or posts (configurable).
+Shows a list of the last changes in the widget area or via shortcode. This can include changed pages and/or posts (configurable).
 
 Additional features include:
 
 * Select the number of entries in the list
 * Define pages to be exluded
-* Shortcode support
 
 = Exclude page or post =
 To exclude a page or post from being listed in the widget do the following steps:
@@ -40,7 +39,7 @@ To show the list of the last changes via shortcode use the following syntax:
 The Attribute 'number' defines the number of entries shown.
 With the attributes 'showpages' and 'showposts' changed pages and/or posts are included.
 
-Other than with the Widget with the sortcode is no title written. if a title is needed it has to be defined by hand in front of the shortcode.
+In difference to the widget, with the sortcode no title is written. If a title is needed it has to be defined by hand in front of the shortcode.
 
 == Changelog ==
 
