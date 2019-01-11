@@ -213,6 +213,29 @@ function list_last_changes_shortcode_funct($atts ) {
 }
 
 /**
+ * Renders the `plugins/list-last-changes` block on server.
+ *
+ * @param array $attributes The block attributes.
+ *
+ * @return string Returns the post content with the last changes added.
+ */
+function render_block_plugins_list_last_changes( $attributes ) {
+	$args = array(
+		'number'      => $attributes['number'],
+		'showpages'   => $attributes['showpages'],
+		'showposts'   => $attributes['showposts'],
+	);
+
+	$number = empty($args['number']) ? ' ' : $args['number'];
+	$showpages = $args['showpages'];
+	$showposts = $args['showposts'];
+
+	$recentChanges = ListLastChangesWidget::generate_list($number, $showpages, $showposts);
+
+	return $recentChanges;
+}
+
+/**
  * Registers all block assets so that they can be enqueued through Gutenberg in
  * the corresponding context.
  *
@@ -246,7 +269,7 @@ function list_last_changes_register_block() {
 					'default' => false,
 				),
 			),
-			//'render_callback' => 'render_block_core_latest_posts',
+			'render_callback' => 'render_block_plugins_list_last_changes',
 		)
 	);
 
