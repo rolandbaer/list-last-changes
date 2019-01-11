@@ -12,7 +12,8 @@ Shows a list of the last changes of a WordPress site.
 
 == Description ==
 
-Shows a list of the last changes in the widget area or via shortcode. This can include changed pages and/or posts (configurable).
+Shows a list of the last changes in the widget area, via shortcode or in the gutenberg block editor.
+This can include changed pages and/or posts (configurable).
 
 Additional features include:
 
@@ -31,6 +32,12 @@ To exclude a page or post from being listed in the widget do the following steps
 
 To include it again set the value to false or remove the custom field completely.
 
+= Block Editor (Gutenberg) =
+The block can be found in Widgets -> List Last Changes.
+The block can be configured in the block settings (panel on the right side)
+
+In difference to the widget, with the block no title is written. If a title is needed it has to be defined in an own block in front of the List Last Changes block.
+
 = Shortcode =
 To show the list of the last changes via shortcode use the following syntax:
 
@@ -43,12 +50,14 @@ In difference to the widget, with the sortcode no title is written. If a title i
 
 == Changelog ==
 
-= 0.7.0 =
+= 0.8.0 =
 
-*Release date: November 18, 2018*
+*Release date: January 11, 2019*
 
-* Added support for shortcode
-* some refactorings
+* Added first support for gutenberg block editor
+
+= Older releases =
+see changelog.txt
 
 == Screenshots ==
 

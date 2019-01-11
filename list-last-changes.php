@@ -3,7 +3,7 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 0.7.0
+ * Version: 0.8.0
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
@@ -211,3 +211,77 @@ function list_last_changes_shortcode_funct($atts ) {
 
 	return ListLastChangesWidget::generate_list($number, $showpages, $showposts);
 }
+
+/**
+ * Renders the `plugins/list-last-changes` block on server.
+ *
+ * @param array $attributes The block attributes.
+ *
+ * @return string Returns the post content with the last changes added.
+ */
+function render_block_plugins_list_last_changes( $attributes ) {
+	$args = array(
+		'number'      => $attributes['number'],
+		'showpages'   => $attributes['showpages'],
+		'showposts'   => $attributes['showposts'],
+	);
+
+	$number = empty($args['number']) ? ' ' : $args['number'];
+	$showpages = $args['showpages'];
+	$showposts = $args['showposts'];
+
+	$recentChanges = ListLastChangesWidget::generate_list($number, $showpages, $showposts);
+
+	return $recentChanges;
+}
+
+/**
+ * Registers all block assets so that they can be enqueued through Gutenberg in
+ * the corresponding context.
+ *
+ * Passes translations to JavaScript.
+ */
+function list_last_changes_register_block() {
+	if ( ! function_exists( 'register_block_type' ) ) {
+		// Gutenberg is not active.
+		return;
+	}
+
+	wp_register_script(
+		'list-last-changes',
+		plugins_url( 'block.js', __FILE__ ),
+		array( 'wp-blocks', 'wp-editor', 'wp-i18n', 'wp-element'/*, 'wp-components'*/ ),
+		filemtime( plugin_dir_path( __FILE__ ) . 'block.js' )
+	);
+
+	register_block_type( 'plugins/list-last-changes', array(
+			'editor_script' => 'list-last-changes',
+			'attributes'      => array(
+				'number'          => array(
+					'type'    => 'number',
+					'default' => 5,
+				),
+				'showpages'       => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+				'showposts'       => array(
+					'type'    => 'boolean',
+					'default' => false,
+				),
+			),
+			'render_callback' => 'render_block_plugins_list_last_changes',
+		)
+	);
+
+	if ( function_exists( 'wp_set_script_translations' ) ) {
+		/**
+		 * May be extended to wp_set_script_translations( 'my-handle', 'my-domain',
+		 * plugin_dir_path( MY_PLUGIN ) . 'languages' ) ). For details see
+		 * https://make.wordpress.org/core/2018/11/09/new-javascript-i18n-support-in-wordpress/
+		 */
+		wp_set_script_translations( 'list-last-changes', 'list-last-changes' );
+	}
+}
+
+add_action('init', 'list_last_changes_register_block' );
