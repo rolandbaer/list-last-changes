@@ -1,14 +1,11 @@
-( function( blocks, editor, i18n, element, components, data ) {
+( function( blocks, editor, i18n, element, components ) {
 	var __ = i18n.__;
 	var el = element.createElement,
 		InspectorControls = editor.InspectorControls,
 		PanelBody = components.PanelBody,
 		QueryControls = components.QueryControls,
 		ToggleControl = components.ToggleControl,
-		Fragment = element.Fragment,
-		Spinner = components.Spinner,
-		Placeholder = components.Placeholder,
-		withSelect = data.withSelect;
+		ServerSideRender = components.ServerSideRender;
 
 	blocks.registerBlockType( 'plugins/list-last-changes', {
 		title: __( 'List Last Changes' ),
@@ -19,6 +16,7 @@
 		supports: {
 			html: false,
 		},
+
 		attributes: {
 			number: {
 				type: 'number',
@@ -33,17 +31,8 @@
 				default: false,
 			},
 		},
-		/*getEditWrapperProps( attributes ) {
-			const { align } = attributes;
-			if ( [ 'left', 'center', 'right', 'wide', 'full' ].includes( align ) ) {
-				return { 'data-align': align };
-			}
-		},*/
-		edit: withSelect( function( select ) {
-			return {
-				changedItems: select( 'core' ).getEntityRecords( 'postType', 'post' )
-			};
-		} )(function( props ) {
+
+		edit: function( props ) {
 			const { attributes, setAttributes } = props;
 			const { number, showpages, showposts, changedItems } = attributes;
 
@@ -83,63 +72,15 @@
 				),
 			);
 
-			const hasChangedItems = Array.isArray( changedItems ) && changedItems.length;
-			if ( ! hasChangedItems ) {
-				var innerPlaceholder = ! Array.isArray( changedItems ) ?
-					el(Spinner) :
-					__( 'No posts found.' );
-
-				return el(
-					Fragment,
-					null,
-					inspectorControls,
-					el(
-						Placeholder,
-						{
-							icon: "admin-post",
-							label:  __( 'List Last Changes' ),
-						},
-						innerPlaceholder
-					)
-				);
-			}
-			
-			// Removing items from display should be instant.
-			const displayItems = changedItems.length > number ?
-				changedItems.slice( 0, number ) :
-				changedItems;
-
 			return [
 				inspectorControls,
-				el(
-					"ul",
-					null,
-					displayItems.map( ( item, i ) =>
-						el(
-							"li",
-							{
-								key: i
-							},
-							el(
-								"a",
-								{
-									href: item.link,
-									target: "_blank",
-								}
-								, decodeEntities( item.title.rendered.trim() ) || __( '(Untitled)' ) 
-							),
-							el(
-								"span",
-								{
-									className: "wp-block-list-last-changes__item-date",
-								}
-								, dateI18n( dateFormat, item.date_gmt )
-							)
-						)
-					)
-				)
+				el(ServerSideRender, {
+					block: "plugins/list-last-changes",
+					attributes: props.attributes,
+				}),
 			];
-		}),
+		},
+
 		save() {
 			return null;
 		},
@@ -150,8 +91,4 @@
 	window.wp.i18n,
 	window.wp.element,
 	window.wp.components,
-	window.wp.data,
 ) );
-
-
-

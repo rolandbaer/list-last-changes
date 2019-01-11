@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 0.7.0 =
+
+*Release date: November 18, 2018*
+
+* Added support for shortcode
+* some refactorings
+
 = 0.6.6 =
 
 *Release date: August 1, 2018*
