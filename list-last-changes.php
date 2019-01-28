@@ -80,7 +80,7 @@ class ListLastChangesWidget extends WP_Widget {
 
 		$mypages = $showpages ? ListLastChangesWidget::wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludePageIds)) : array();
 		usort($mypages, 'sort_pages_by_date_desc');
-		$myposts = $showposts ? get_posts(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'exclude' => $excludePostIds)) : array();
+		$myposts = $showposts ? get_posts(array('numberposts' => $number, 'orderby' => 'modified', 'exclude' => $excludePostIds)) : array();
 		usort($myposts, 'sort_pages_by_date_desc');
 		$count = min(count($mypages) + count($myposts), $number);
 		$pagePos = 0;
