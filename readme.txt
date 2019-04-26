@@ -6,7 +6,7 @@ Requires at least: 4.6.0
 Tested up to: 5.2.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 0.8.0
+Stable tag: 0.8.1
 
 Shows a list of the last changes of a WordPress site.
 
