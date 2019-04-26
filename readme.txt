@@ -50,11 +50,11 @@ In difference to the widget, with the sortcode no title is written. If a title i
 
 == Changelog ==
 
-= 0.8.0 =
+= 0.8.1 =
 
-*Release date: January 11, 2019*
+*Release date: April 24, 2019*
 
-* Added first support for gutenberg block editor
+* Bugfix for incorrect sorting and amount of posts (thanks to osthafen) 
 
 = Older releases =
 see changelog.txt

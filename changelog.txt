@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 0.8.0 =
+
+*Release date: January 11, 2019*
+
+* Added first support for gutenberg block editor
+
 = 0.7.0 =
 
 *Release date: November 18, 2018*
