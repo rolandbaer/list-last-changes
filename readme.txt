@@ -3,7 +3,7 @@ Contributors: rbaer, osthafen
 Tags: last changes, pages, posts
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=PRW4QXZ3DHWL6&lc=GB&item_name=List%20Last%20Changes%20Plugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted
 Requires at least: 4.6.0
-Tested up to: 5.3.0
+Tested up to: 5.4.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Stable tag: 0.8.1
