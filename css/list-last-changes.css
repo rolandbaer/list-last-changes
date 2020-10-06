@@ -1,5 +1,5 @@
 
-span.list_last_changes_date
+span.list_last_changes_date, span.list_last_changes_author
 {
     color: rgb(170, 170, 170);
     font-size: 0.785714rem;

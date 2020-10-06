@@ -50,14 +50,15 @@ class ListLastChangesWidget extends WP_Widget {
 		$number = empty($instance['number']) ? ' ' : $instance['number'];
 		$showpages = isset( $instance['showpages'] ) ? (bool) $instance['showpages'] : true;
 		$showposts = isset( $instance['showposts'] ) ? (bool) $instance['showposts'] : false;
+		$showauthor = isset( $instance['showauthor'] ) ? (bool) $instance['showauthor'] : false;
 
 		echo '<aside id="list_last_changes_widget_1" class="widget list_last_changes_widget">' . "\n";
 		echo ' <h3 class="widget-title">' . $title . '</h3>' . "\n";
-		echo ListLastChangesWidget::generate_list($number, $showpages, $showposts);
+		echo ListLastChangesWidget::generate_list($number, $showpages, $showposts, $showauthor);
 		echo "</aside>\n";	
 	}
 
-	public static function generate_list($number, $showpages, $showposts) {
+	public static function generate_list($number, $showpages, $showposts, $showauthor) {
 		$content = " <ul>\n";
 		
 		$excludePages = ListLastChangesWidget::wp_get_pages(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'hierarchical' => 0));
@@ -99,7 +100,11 @@ class ListLastChangesWidget extends WP_Widget {
 			}
 			setup_postdata($post);	
 			$content = $content . '  <li class="list_last_changes_title">'. "\n" . '   <a href="' . get_page_link( $post->ID ) .'">' . $post->post_title . "</a>\n";
-			$content = $content . '   <span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>\n  </li>\n";
+			$content = $content . '   <span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>\n";
+			if($showauthor) {
+				$content = $content . '   <span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , $post->post_author ) . "</span>\n";
+			}
+			$content = $content . "</li>\n";
 		}
 
 		$content = $content . " </ul>\n";
@@ -112,22 +117,25 @@ class ListLastChangesWidget extends WP_Widget {
 		$instance['number'] = strip_tags($new_instance['number']);
 		$instance['showpages'] = isset( $new_instance['showpages'] ) ? (bool) $new_instance['showpages'] : false;
 		$instance['showposts'] = isset( $new_instance['showposts'] ) ? (bool) $new_instance['showposts'] : false;
+		$instance['showauthor'] = isset( $new_instance['showauthor'] ) ? (bool) $new_instance['showauthor'] : false;
 
 		return $instance;
 	}
 
 	function form( $instance ) {
 		//  Assigns values
-		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Last Changes', 'number' => '5', 'showpages' => true, 'showposts' => false ) );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Last Changes', 'number' => '5', 'showpages' => true, 'showposts' => false, 'showauthor' => false ) );
 		$title = strip_tags($instance['title']);
 		$number = strip_tags($instance['number']);
 		$showpages = strip_tags($instance['showpages']);
 		$showposts = strip_tags($instance['showposts']);
+		$showauthor = strip_tags($instance['showauthor']);
 		?>
 			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo __('Title', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
 			<p><label for="<?php echo $this->get_field_id('number'); ?>"><?php echo __('Number of shown changes', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo esc_attr($number); ?>" /></label></p>
 			<p><input class="checkbox" id="<?php echo $this->get_field_id('showpages'); ?>" name="<?php echo $this->get_field_name('showpages'); ?>" type="checkbox" <?php checked( $showpages ); ?> /><label for="<?php echo $this->get_field_id('showpages'); ?>"><?php echo __('Show changed Pages', 'list-last-changes'); ?></label></p>
 			<p><input class="checkbox" id="<?php echo $this->get_field_id('showposts'); ?>" name="<?php echo $this->get_field_name('showposts'); ?>" type="checkbox" <?php checked( $showposts ); ?> /><label for="<?php echo $this->get_field_id('showposts'); ?>"><?php echo __('Show changed Posts', 'list-last-changes'); ?></label></p>
+			<p><input class="checkbox" id="<?php echo $this->get_field_id('showauthor'); ?>" name="<?php echo $this->get_field_name('showauthor'); ?>" type="checkbox" <?php checked( $showauthor ); ?> /><label for="<?php echo $this->get_field_id('showauthor'); ?>"><?php echo __('Show author', 'list-last-changes'); ?></label></p>
 		<?php
 	}
 
@@ -203,13 +211,14 @@ function list_last_changes_shortcode_funct($atts ) {
 		'number' => '5',
 		'showpages' => 'true',
 		'showposts' => 'false',
+		'showauthor' => 'false',
 	), $atts );
 
 	$number = empty($a['number']) ? ' ' : $a['number'];
 	$showpages = $a['showpages'] === 'true';
 	$showposts = $a['showposts'] === 'true';
-
-	return ListLastChangesWidget::generate_list($number, $showpages, $showposts);
+	$showauthor = $a['showauthor'] === 'true';
+	return ListLastChangesWidget::generate_list($number, $showpages, $showposts, $showauthor);
 }
 
 /**
@@ -224,13 +233,15 @@ function render_block_plugins_list_last_changes( $attributes ) {
 		'number'      => $attributes['number'],
 		'showpages'   => $attributes['showpages'],
 		'showposts'   => $attributes['showposts'],
+		'showauthor'  => $attributes['showauthor'],
 	);
 
 	$number = empty($args['number']) ? ' ' : $args['number'];
 	$showpages = $args['showpages'];
 	$showposts = $args['showposts'];
+	$showauthor = $args['showauthor'];
 
-	$recentChanges = ListLastChangesWidget::generate_list($number, $showpages, $showposts);
+	$recentChanges = ListLastChangesWidget::generate_list($number, $showpages, $showposts, $showauthor);
 
 	return $recentChanges;
 }
@@ -266,6 +277,10 @@ function list_last_changes_register_block() {
 					'default' => true,
 				),
 				'showposts'       => array(
+					'type'    => 'boolean',
+					'default' => false,
+				),
+				'showauthor'       => array(
 					'type'    => 'boolean',
 					'default' => false,
 				),
