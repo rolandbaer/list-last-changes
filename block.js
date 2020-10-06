@@ -30,11 +30,15 @@
 				type: 'boolean',
 				default: false,
 			},
+			showauthor: {
+				type: 'boolean',
+				default: false,
+			},
 		},
 
 		edit: function( props ) {
 			const { attributes, setAttributes } = props;
-			const { number, showpages, showposts, changedItems } = attributes;
+			const { number, showpages, showposts, showauthor, changedItems } = attributes;
 
 			const inspectorControls = el( 
 				InspectorControls, 
@@ -66,6 +70,16 @@
 							checked: showposts,
 							onChange: function() {
 								setAttributes( { showposts: !showposts } );
+							},
+						}
+					),
+					el(
+						ToggleControl,
+						{
+							label: __('Show author'),
+							checked: showauthor,
+							onChange: function() {
+								setAttributes( { showauthor: !showauthor } );
 							},
 						}
 					),
