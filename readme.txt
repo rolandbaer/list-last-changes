@@ -6,7 +6,7 @@ Requires at least: 4.6.0
 Tested up to: 5.5.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 0.8.1
+Stable tag: 0.8.5
 
 Shows a list of the last changes of a WordPress site.
 
@@ -18,7 +18,8 @@ This can include changed pages and/or posts (configurable).
 Additional features include:
 
 * Select the number of entries in the list
-* Define pages to be exluded
+* Define pages to be excluded
+* Show the author of the page/post
 
 = Exclude page or post =
 To exclude a page or post from being listed in the widget do the following steps:
@@ -41,20 +42,21 @@ In difference to the widget, with the block no title is written. If a title is n
 = Shortcode =
 To show the list of the last changes via shortcode use the following syntax:
 
-[list_last_changes number='7' showpages='true' showposts='true' /]
+[list_last_changes number='7' showpages='true' showposts='true' showauthor='false'/]
 
-The Attribute 'number' defines the number of entries shown.
+The attribute 'number' defines the number of entries shown.
 With the attributes 'showpages' and 'showposts' changed pages and/or posts are included.
+To show also the author set the attribute 'showauthor' to true.
 
-In difference to the widget, with the sortcode no title is written. If a title is needed it has to be defined by hand in front of the shortcode.
+In difference to the widget, with the shortcode no title is written. If a title is needed it has to be defined by hand in front of the shortcode.
 
 == Changelog ==
 
-= 0.8.1 =
+= 0.8.5 =
 
-*Release date: April 24, 2019*
+*Release date: October 7, 2020*
 
-* Bugfix for incorrect sorting and amount of posts (thanks to osthafen) 
+* Added support for also showing the author of the post (deactivated by default)
 
 = Older releases =
 see changelog.txt

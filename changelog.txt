@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 0.8.1 =
+
+*Release date: April 24, 2019*
+
+* Bugfix for incorrect sorting and amount of posts (thanks to osthafen) 
+
 = 0.8.0 =
 
 *Release date: January 11, 2019*
@@ -30,7 +36,7 @@
 
 *Release date: January 17, 2018*
 
-* Added Support for translations
+* Added support for translations
 * Icon for the plugin directory created
 
 = 0.5.0 =
