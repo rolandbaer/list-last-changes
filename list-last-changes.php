@@ -10,7 +10,7 @@
  * License: GPLv3
  */
  
- /*  Copyright 2013-2019  Roland Bär  (email : info@rolandbaer.ch)
+/*  Copyright 2013-2019  Roland Bär  (email : info@rolandbaer.ch)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 3, as 
@@ -55,7 +55,7 @@ class ListLastChangesWidget extends WP_Widget {
 		echo '<aside id="list_last_changes_widget_1" class="widget list_last_changes_widget">' . "\n";
 		echo ' <h3 class="widget-title">' . $title . '</h3>' . "\n";
 		echo ListLastChangesWidget::generate_list($number, $showpages, $showposts, $showauthor);
-		echo "</aside>\n";	
+		echo "</aside>\n";
 	}
 
 	public static function generate_list($number, $showpages, $showposts, $showauthor) {
@@ -98,7 +98,7 @@ class ListLastChangesWidget extends WP_Widget {
 				$post = $myposts[$postPos];
 				$postPos++;
 			}
-			setup_postdata($post);	
+			setup_postdata($post);
 			$content = $content . '  <li class="list_last_changes_title">'. "\n" . '   <a href="' . get_page_link( $post->ID ) .'">' . $post->post_title . "</a>\n";
 			$content = $content . '   <span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>\n";
 			if($showauthor) {
@@ -266,21 +266,21 @@ function list_last_changes_register_block() {
 	);
 
 	register_block_type( 'plugins/list-last-changes', array(
-			'editor_script' => 'list-last-changes',
+			'editor_script'   => 'list-last-changes',
 			'attributes'      => array(
-				'number'          => array(
+				'number'      => array(
 					'type'    => 'number',
 					'default' => 5,
 				),
-				'showpages'       => array(
+				'showpages'   => array(
 					'type'    => 'boolean',
 					'default' => true,
 				),
-				'showposts'       => array(
+				'showposts'   => array(
 					'type'    => 'boolean',
 					'default' => false,
 				),
-				'showauthor'       => array(
+				'showauthor'  => array(
 					'type'    => 'boolean',
 					'default' => false,
 				),
