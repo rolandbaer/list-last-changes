@@ -10,7 +10,7 @@
  * License: GPLv3
  */
  
-/*  Copyright 2013-2019  Roland Bär  (email : info@rolandbaer.ch)
+/*  Copyright 2013-2020  Roland Bär  (email : info@rolandbaer.ch)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 3, as 
