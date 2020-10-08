@@ -3,7 +3,7 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 0.8.5
+ * Version: 0.8.6
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
@@ -46,16 +46,18 @@ class ListLastChangesWidget extends WP_Widget {
 		extract($args);
 
 		//  Get the title of the widget and the specified number of elements
-		$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
+		$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
 		$number = empty($instance['number']) ? ' ' : $instance['number'];
 		$showpages = isset( $instance['showpages'] ) ? (bool) $instance['showpages'] : true;
 		$showposts = isset( $instance['showposts'] ) ? (bool) $instance['showposts'] : false;
 		$showauthor = isset( $instance['showauthor'] ) ? (bool) $instance['showauthor'] : false;
 
-		echo '<aside id="list_last_changes_widget_1" class="widget list_last_changes_widget">' . "\n";
-		echo ' <h3 class="widget-title">' . $title . '</h3>' . "\n";
+		echo $args['before_widget'] . "\n";
+		if ( $title ) {
+			echo $args['before_title'] . $title . $args['after_title'] . "\n";
+		}
 		echo ListLastChangesWidget::generate_list($number, $showpages, $showposts, $showauthor);
-		echo "</aside>\n";
+		echo $args['after_widget'] . "\n";;
 	}
 
 	public static function generate_list($number, $showpages, $showposts, $showauthor) {
@@ -104,7 +106,7 @@ class ListLastChangesWidget extends WP_Widget {
 			if($showauthor) {
 				$content = $content . '   <span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , $post->post_author ) . "</span>\n";
 			}
-			$content = $content . "</li>\n";
+			$content = $content . "  </li>\n";
 		}
 
 		$content = $content . " </ul>\n";

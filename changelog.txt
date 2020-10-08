@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 0.8.5 =
+
+*Release date: October 7, 2020*
+
+* Added support for also showing the author of the post (deactivated by default)
+
 = 0.8.1 =
 
 *Release date: April 24, 2019*
