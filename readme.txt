@@ -1,12 +1,12 @@
 === List Last Changes ===
 Contributors: rbaer, osthafen
-Tags: last changes, pages, posts
+Tags: last changes, pages, posts, widget, shortcode, block editor
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=PRW4QXZ3DHWL6&lc=GB&item_name=List%20Last%20Changes%20Plugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted
 Requires at least: 4.6.0
 Tested up to: 5.5.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 0.8.5
+Stable tag: 0.8.6
 
 Shows a list of the last changes of a WordPress site.
 
@@ -52,11 +52,11 @@ In difference to the widget, with the shortcode no title is written. If a title 
 
 == Changelog ==
 
-= 0.8.5 =
+= 0.8.6 =
 
-*Release date: October 7, 2020*
+*Release date: October 8, 2020*
 
-* Added support for also showing the author of the post (deactivated by default)
+* Bugfix for hard coded title heading (h3) and hard coded id
 
 = Older releases =
 see changelog.txt
