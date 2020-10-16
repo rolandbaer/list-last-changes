@@ -59,7 +59,7 @@ In difference to the widget, with the shortcode no title is written. If a title 
 * Bugfix for hard coded title heading (h3) and hard coded id
 
 = Older releases =
-see changelog.txt
+see [additional changelog.txt file](https://plugins.svn.wordpress.org/list-last-changes/trunk/changelog.txt)
 
 == Screenshots ==
 
