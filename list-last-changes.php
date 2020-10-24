@@ -101,7 +101,7 @@ class ListLastChangesWidget extends WP_Widget {
 				$postPos++;
 			}
 			setup_postdata($post);
-			$content = $content . '  <li class="list_last_changes_title">'. "\n" . '   <a href="' . get_page_link( $post->ID ) .'">' . $post->post_title . "</a>\n";
+			$content = $content . '  <li class="list_last_changes_title">'. "\n" . '   <a href="' . get_permalink( $post->ID ) .'">' . $post->post_title . "</a>\n";
 			$content = $content . '   <span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>\n";
 			if($showauthor) {
 				$content = $content . '   <span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , $post->post_author ) . "</span>\n";

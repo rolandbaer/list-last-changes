@@ -6,7 +6,7 @@ Requires at least: 4.6.0
 Tested up to: 5.5.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 0.8.6
+Stable tag: 0.8.7
 
 Shows a list of the last changes of a WordPress site.
 
@@ -51,6 +51,12 @@ To show also the author set the attribute 'showauthor' to true.
 In difference to the widget, with the shortcode no title is written. If a title is needed it has to be defined by hand in front of the shortcode.
 
 == Changelog ==
+
+= 0.8.7 =
+
+*Release date: October 24, 2020*
+
+* Bugfix for not using the right url of a blog post when permalink was customized
 
 = 0.8.6 =
 
