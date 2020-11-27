@@ -3,7 +3,7 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 0.8.7
+ * Version: 0.9.0
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
@@ -56,11 +56,11 @@ class ListLastChangesWidget extends WP_Widget {
 		if ( $title ) {
 			echo $args['before_title'] . $title . $args['after_title'] . "\n";
 		}
-		echo ListLastChangesWidget::generate_list($number, $showpages, $showposts, $showauthor);
+		echo ListLastChangesWidget::generate_list($number, $showpages, $showposts, list_last_changes_default_template($showauthor));
 		echo $args['after_widget'] . "\n";;
 	}
 
-	public static function generate_list($number, $showpages, $showposts, $showauthor) {
+	public static function generate_list($number, $showpages, $showposts, $template) {
 		$content = " <ul>\n";
 		
 		$excludePages = ListLastChangesWidget::wp_get_pages(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'hierarchical' => 0));
@@ -101,11 +101,13 @@ class ListLastChangesWidget extends WP_Widget {
 				$postPos++;
 			}
 			setup_postdata($post);
-			$content = $content . '  <li class="list_last_changes_title">'. "\n" . '   <a href="' . get_permalink( $post->ID ) .'">' . $post->post_title . "</a>\n";
-			$content = $content . '   <span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>\n";
-			if($showauthor) {
-				$content = $content . '   <span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , $post->post_author ) . "</span>\n";
-			}
+			$transitions = array(
+				"{title}" => '<a href="' . get_permalink( $post->ID ) .'">' . $post->post_title . "</a>",
+				"{change_date}" => '<span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>",
+				"{author}" => '<span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , $post->post_author ) . "</span>");
+			$entry = strtr($template, $transitions);
+			$content = $content . '  <li class="list_last_changes_title">'. "\n" ;
+			$content = $content . $entry;
 			$content = $content . "  </li>\n";
 		}
 
@@ -214,13 +216,24 @@ function list_last_changes_shortcode_funct($atts ) {
 		'showpages' => 'true',
 		'showposts' => 'false',
 		'showauthor' => 'false',
+		'template' => '',
 	), $atts );
 
 	$number = empty($a['number']) ? ' ' : $a['number'];
 	$showpages = $a['showpages'] === 'true';
 	$showposts = $a['showposts'] === 'true';
 	$showauthor = $a['showauthor'] === 'true';
-	return ListLastChangesWidget::generate_list($number, $showpages, $showposts, $showauthor);
+	$template = empty($a['template']) ? list_last_changes_default_template($showauthor) : $a['template'];
+	return ListLastChangesWidget::generate_list($number, $showpages, $showposts, $template);
+}
+
+function list_last_changes_default_template($showauthor) {
+	$template = "   {title}\n   {change_date}\n";
+	if($showauthor) {
+		$template = $template . "   {author}\n";
+	}
+
+	return $template;
 }
 
 /**
@@ -243,7 +256,7 @@ function render_block_plugins_list_last_changes( $attributes ) {
 	$showposts = $args['showposts'];
 	$showauthor = $args['showauthor'];
 
-	$recentChanges = ListLastChangesWidget::generate_list($number, $showpages, $showposts, $showauthor);
+	$recentChanges = ListLastChangesWidget::generate_list($number, $showpages, $showposts, list_last_changes_default_template($showauthor));
 
 	return $recentChanges;
 }
