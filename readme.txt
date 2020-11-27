@@ -6,7 +6,7 @@ Requires at least: 4.6.0
 Tested up to: 5.6.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 0.8.7
+Stable tag: 0.9.0
 
 Shows a list of the last changes of a WordPress site.
 
@@ -42,15 +42,23 @@ In difference to the widget, with the block no title is written. If a title is n
 = Shortcode =
 To show the list of the last changes via shortcode use the following syntax:
 
-[list_last_changes number='7' showpages='true' showposts='true' showauthor='false'/]
+[list_last_changes number='7' showpages='true' showposts='true' showauthor='false' template='{title} {change_date} {author}' /]
 
 The attribute 'number' defines the number of entries shown.
 With the attributes 'showpages' and 'showposts' changed pages and/or posts are included.
-To show also the author set the attribute 'showauthor' to true.
+To show also the author set the attribute 'showauthor' to true (deprecated, use template mechanism instead).
+The 'template' attribute defines the content of the entries. The following fields can be used: {title}, {change_date} and {author}.
+If a template is defined the attribute 'showauthor' is ignored.
 
 In difference to the widget, with the shortcode no title is written. If a title is needed it has to be defined by hand in front of the shortcode.
 
 == Changelog ==
+
+= 0.9.0 =
+
+*Release date: November 27, 2020*
+
+* Introducing template mechanism in shortcode (also planned for widget and block)
 
 = 0.8.7 =
 
