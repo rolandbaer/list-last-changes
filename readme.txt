@@ -47,16 +47,27 @@ To show the list of the last changes via shortcode use the following syntax:
 The attribute 'number' defines the number of entries shown.
 With the attributes 'showpages' and 'showposts' changed pages and/or posts are included.
 To show also the author set the attribute 'showauthor' to true (deprecated, use template mechanism instead).
-The 'template' attribute defines the content of the entries. The following fields can be used: {title}, {change_date} and {author}.
-If a template is defined the attribute 'showauthor' is ignored.
+The 'template' attribute defines the content of the entries. If the 'template' attribute is defined the attribute 'showauthor' is ignored.
 
 In difference to the widget, with the shortcode no title is written. If a title is needed it has to be defined by hand in front of the shortcode.
+
+= Templates =
+
+In the template string the following fields can be used: {title}, {change_date} and {author}.
+{title} : the title of the page or post with a link to it
+{change_date} : the date the page or post was changed
+{author} : the author of the page or post
+
+Sample templates:
+{title} {change_date} : the default template
+{title} {change_date} {author} : behaves as in versions before 0.9 when show author was enabled
+{change_date} : shows only the change_date, can be used with number = 1 as last modified date of a WordPress Site
 
 == Changelog ==
 
 = 0.9.0 =
 
-*Release date: November 27, 2020*
+*Release date: November 29, 2020*
 
 * Introducing template mechanism in shortcode (also planned for widget and block)
 
