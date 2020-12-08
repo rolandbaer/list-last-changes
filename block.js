@@ -6,7 +6,7 @@
 		QueryControls = components.QueryControls,
 		TextControl = components.TextControl,
 		ToggleControl = components.ToggleControl,
-		ServerSideRender = components.ServerSideRender;
+		ServerSideRender = wp.serverSideRender;
 
 	blocks.registerBlockType( 'plugins/list-last-changes', {
 		title: __( 'List Last Changes' ),
