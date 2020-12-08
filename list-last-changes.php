@@ -282,7 +282,7 @@ function list_last_changes_register_block() {
 	wp_register_script(
 		'list-last-changes',
 		plugins_url( 'block.js', __FILE__ ),
-		array( 'wp-blocks', 'wp-editor', 'wp-i18n', 'wp-element'/*, 'wp-components'*/ ),
+		array( 'wp-blocks', 'wp-block-editor', 'wp-i18n', 'wp-element'/*, 'wp-components'*/ ),
 		filemtime( plugin_dir_path( __FILE__ ) . 'block.js' )
 	);
 
