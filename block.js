@@ -1,7 +1,7 @@
-( function( blocks, editor, i18n, element, components ) {
+( function( blocks, blockEditor, i18n, element, components ) {
 	var __ = i18n.__;
 	var el = element.createElement,
-		InspectorControls = editor.InspectorControls,
+		InspectorControls = blockEditor.InspectorControls,
 		PanelBody = components.PanelBody,
 		QueryControls = components.QueryControls,
 		TextControl = components.TextControl,
@@ -108,7 +108,7 @@
 	} );
 }(
 	window.wp.blocks,
-	window.wp.editor,
+	window.wp.blockEditor,
 	window.wp.i18n,
 	window.wp.element,
 	window.wp.components,
