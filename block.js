@@ -4,6 +4,7 @@
 		InspectorControls = editor.InspectorControls,
 		PanelBody = components.PanelBody,
 		QueryControls = components.QueryControls,
+		TextControl = components.TextControl,
 		ToggleControl = components.ToggleControl,
 		ServerSideRender = components.ServerSideRender;
 
@@ -34,11 +35,19 @@
 				type: 'boolean',
 				default: false,
 			},
-		},
+			template: {
+				type: 'string',
+				default: "{title} {change_date}",
+			},
+	},
 
 		edit: function( props ) {
 			const { attributes, setAttributes } = props;
-			const { number, showpages, showposts, showauthor, changedItems } = attributes;
+			const { number, showpages, showposts, showauthor, template } = attributes;
+
+			if(showauthor === true && template === "{title} {change_date}") {
+				props.setAttributes({showauthor: false, template: "{title} {change_date} {author}"});
+			}
 
 			const inspectorControls = el( 
 				InspectorControls, 
@@ -74,13 +83,11 @@
 						}
 					),
 					el(
-						ToggleControl,
+						TextControl,
 						{
-							label: __('Show author'),
-							checked: showauthor,
-							onChange: function() {
-								setAttributes( { showauthor: !showauthor } );
-							},
+							label: __('Template'),
+							value: template,
+							onChange: ( value ) => props.setAttributes( { template: value } ),
 						}
 					),
 				),

@@ -253,14 +253,16 @@ function render_block_plugins_list_last_changes( $attributes ) {
 		'showpages'   => $attributes['showpages'],
 		'showposts'   => $attributes['showposts'],
 		'showauthor'  => $attributes['showauthor'],
+		'template'    => $attributes['template'],
 	);
 
 	$number = empty($args['number']) ? ' ' : $args['number'];
 	$showpages = $args['showpages'];
 	$showposts = $args['showposts'];
 	$showauthor = $args['showauthor'];
+	$template = empty($args['template']) ? list_last_changes_default_template($showauthor) : $args['template'];
 
-	$recentChanges = ListLastChangesWidget::generate_list($number, $showpages, $showposts, list_last_changes_default_template($showauthor));
+	$recentChanges = ListLastChangesWidget::generate_list($number, $showpages, $showposts, $template);
 
 	return $recentChanges;
 }
@@ -302,6 +304,10 @@ function list_last_changes_register_block() {
 				'showauthor'  => array(
 					'type'    => 'boolean',
 					'default' => false,
+				),
+				'template'    => array(
+					'type'    => 'string',
+					'default' => "{title} {change_date}"
 				),
 			),
 			'render_callback' => 'render_block_plugins_list_last_changes',
