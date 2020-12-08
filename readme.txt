@@ -6,7 +6,7 @@ Requires at least: 4.6.0
 Tested up to: 5.6.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 0.9.0
+Stable tag: 0.9.5
 
 Shows a list of the last changes of a WordPress site.
 
@@ -64,6 +64,13 @@ Sample templates:
 {change_date} : shows only the change_date, can be used with number = 1 as last modified date of a WordPress Site
 
 == Changelog ==
+
+= 0.9.5 =
+
+*Release date: December 08, 2020*
+
+* Introducing template mechanism in widget 
+* The configuration field 'show author' is replaced by the template mechanism
 
 = 0.9.0 =
 
