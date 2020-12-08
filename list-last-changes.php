@@ -51,12 +51,13 @@ class ListLastChangesWidget extends WP_Widget {
 		$showpages = isset( $instance['showpages'] ) ? (bool) $instance['showpages'] : true;
 		$showposts = isset( $instance['showposts'] ) ? (bool) $instance['showposts'] : false;
 		$showauthor = isset( $instance['showauthor'] ) ? (bool) $instance['showauthor'] : false;
+		$template = empty($instance['template']) ? list_last_changes_default_template($showauthor) : $instance['template'];
 
 		echo $args['before_widget'] . "\n";
 		if ( $title ) {
 			echo $args['before_title'] . $title . $args['after_title'] . "\n";
 		}
-		echo ListLastChangesWidget::generate_list($number, $showpages, $showposts, list_last_changes_default_template($showauthor));
+		echo ListLastChangesWidget::generate_list($number, $showpages, $showposts, $template);
 		echo $args['after_widget'] . "\n";;
 	}
 
