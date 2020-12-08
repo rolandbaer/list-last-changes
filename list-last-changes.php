@@ -122,7 +122,8 @@ class ListLastChangesWidget extends WP_Widget {
 		$instance['number'] = strip_tags($new_instance['number']);
 		$instance['showpages'] = isset( $new_instance['showpages'] ) ? (bool) $new_instance['showpages'] : false;
 		$instance['showposts'] = isset( $new_instance['showposts'] ) ? (bool) $new_instance['showposts'] : false;
-		$instance['showauthor'] = isset( $new_instance['showauthor'] ) ? (bool) $new_instance['showauthor'] : false;
+		$instance['template'] = strip_tags($new_instance['template']);
+		unset($instance['showauthor']);
 
 		return $instance;
 	}
@@ -130,17 +131,19 @@ class ListLastChangesWidget extends WP_Widget {
 	function form( $instance ) {
 		//  Assigns values
 		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Last Changes', 'number' => '5', 'showpages' => true, 'showposts' => false, 'showauthor' => false ) );
+		$showauthor = strip_tags($instance['showauthor']);
+		$instance = wp_parse_args( (array) $instance, array( 'template' => list_last_changes_default_template($showauthor) ) );
 		$title = strip_tags($instance['title']);
 		$number = strip_tags($instance['number']);
 		$showpages = strip_tags($instance['showpages']);
 		$showposts = strip_tags($instance['showposts']);
-		$showauthor = strip_tags($instance['showauthor']);
+		$template = strip_tags($instance['template']);
 		?>
 			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo __('Title', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
 			<p><label for="<?php echo $this->get_field_id('number'); ?>"><?php echo __('Number of shown changes', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo esc_attr($number); ?>" /></label></p>
 			<p><input class="checkbox" id="<?php echo $this->get_field_id('showpages'); ?>" name="<?php echo $this->get_field_name('showpages'); ?>" type="checkbox" <?php checked( $showpages ); ?> /><label for="<?php echo $this->get_field_id('showpages'); ?>"><?php echo __('Show changed Pages', 'list-last-changes'); ?></label></p>
 			<p><input class="checkbox" id="<?php echo $this->get_field_id('showposts'); ?>" name="<?php echo $this->get_field_name('showposts'); ?>" type="checkbox" <?php checked( $showposts ); ?> /><label for="<?php echo $this->get_field_id('showposts'); ?>"><?php echo __('Show changed Posts', 'list-last-changes'); ?></label></p>
-			<p><input class="checkbox" id="<?php echo $this->get_field_id('showauthor'); ?>" name="<?php echo $this->get_field_name('showauthor'); ?>" type="checkbox" <?php checked( $showauthor ); ?> /><label for="<?php echo $this->get_field_id('showauthor'); ?>"><?php echo __('Show author', 'list-last-changes'); ?></label></p>
+			<p><label for="<?php echo $this->get_field_id('template'); ?>"><?php echo __('Template', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('template'); ?>" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo esc_attr($template); ?>" /></label></p>
 		<?php
 	}
 
