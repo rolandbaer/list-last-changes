@@ -6,7 +6,7 @@ Requires at least: 4.6.0
 Tested up to: 5.6.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 0.9.5
+Stable tag: 1.0.0
 
 Shows a list of the last changes of a WordPress site.
 
@@ -65,12 +65,20 @@ Sample templates:
 
 == Changelog ==
 
+= 1.0.0 =
+
+*Release date: December 09, 2020*
+
+* Introducing template mechanism in the block editor 
+* The configuration field 'show author' in the block editor is replaced by the template mechanism
+* The template mechanism is now "feature complete"
+
 = 0.9.5 =
 
 *Release date: December 08, 2020*
 
 * Introducing template mechanism in widget 
-* The configuration field 'show author' is replaced by the template mechanism
+* The configuration field 'show author' in the widget is replaced by the template mechanism
 
 = 0.9.0 =
 
