@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 0.8.6 =
+
+*Release date: October 8, 2020*
+
+* Bugfix for hard coded title heading (h3) and hard coded id
+
 = 0.8.5 =
 
 *Release date: October 7, 2020*
