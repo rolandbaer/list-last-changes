@@ -3,14 +3,14 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
  * License: GPLv3
  */
 
-/*  Copyright 2013-2020  Roland Bär  (email : info@rolandbaer.ch)
+/*  Copyright 2013-2022  Roland Bär  (email : info@rolandbaer.ch)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 3, as 
@@ -73,7 +73,7 @@ class ListLastChangesWidget extends WP_Widget {
 			$excludePageIds = $excludePageIds . $excludePages[$i]->ID;
 		}
 
-		$excludePosts = get_posts(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true'));
+		$excludePosts = get_posts(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'numberposts' => -1));
 		$excludePostIds = "";
 		for($i = 0; $i < count($excludePosts); $i++) {
 			if($i > 0) {
