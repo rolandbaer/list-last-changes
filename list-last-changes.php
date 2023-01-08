@@ -145,6 +145,7 @@ class ListLastChangesWidget extends WP_Widget {
 			<p><input class="checkbox" id="<?php echo $this->get_field_id('showposts'); ?>" name="<?php echo $this->get_field_name('showposts'); ?>" type="checkbox" <?php checked( $showposts ); ?> /><label for="<?php echo $this->get_field_id('showposts'); ?>"><?php echo __('Show changed Posts', 'list-last-changes'); ?></label></p>
 			<p><label for="<?php echo $this->get_field_id('template'); ?>"><?php echo __('Template', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('template'); ?>" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo esc_attr($template); ?>" /></label></p>
 		<?php
+		return "show-form";
 	}
 
 	/**
