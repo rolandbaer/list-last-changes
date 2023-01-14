@@ -84,7 +84,7 @@ class ListLastChangesWidget extends WP_Widget {
 
 		$mypages = $showpages ? ListLastChangesWidget::wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludePageIds)) : array();
 		usort($mypages, 'sort_pages_by_date_desc');
-		$myposts = $showposts ? get_posts(array('numberposts' => $number, 'orderby' => 'modified', 'exclude' => $excludePostIds)) : array();
+		$myposts = $showposts ? get_posts(array('numberposts' => (int)$number, 'orderby' => 'modified', 'exclude' => array_map('intval', explode(',',$excludePostIds)))) : array();
 		usort($myposts, 'sort_pages_by_date_desc');
 		$count = min(count($mypages) + count($myposts), $number);
 		$pagePos = 0;
@@ -168,7 +168,7 @@ class ListLastChangesWidget extends WP_Widget {
 		$r['exclude'] = preg_replace('[^0-9,]', '', $r['exclude']);
 
 		// Allow plugins to filter an array of excluded pages
-		$r['exclude'] = implode(',', apply_filters('wp_list_pages_excludes', explode(',', $r['exclude'])));
+		$r['exclude'] = array_map('intval', apply_filters('wp_list_pages_excludes', explode(',', $r['exclude'])));
 
 		// Query pages.
 		$pages = get_pages($r);
