@@ -42,7 +42,7 @@ class ListLastChangesWidget extends WP_Widget {
 	 * @param array $args     Widget arguments.
 	 * @param array $instance Saved values from database.
 	 */
-	function widget( $args, $instance ) {
+	function widget($args, $instance) : void {
 		extract($args);
 
 		//  Get the title of the widget and the specified number of elements
@@ -61,7 +61,7 @@ class ListLastChangesWidget extends WP_Widget {
 		echo $args['after_widget'] . "\n";;
 	}
 
-	public static function generate_list($number, $showpages, $showposts, $template) {
+	public static function generate_list(int $number, bool $showpages, bool $showposts, string $template) : string {
 		$content = " <ul>\n";
 
 		$loop = new WP_Query(array('post_type' => 'page', 'meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'numberposts' => -1));
@@ -101,7 +101,7 @@ class ListLastChangesWidget extends WP_Widget {
 			$transitions = array(
 				"{title}" => '<a href="' . get_permalink( $post->ID ) .'">' . $post->post_title . "</a>",
 				"{change_date}" => '<span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>",
-				"{author}" => '<span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , $post->post_author ) . "</span>");
+				"{author}" => '<span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , (int)$post->post_author ) . "</span>");
 			$entry = strtr($template, $transitions);
 			$content = $content . '  <li class="list_last_changes_title">'. "\n" ;
 			$content = $content . $entry;
@@ -131,7 +131,7 @@ class ListLastChangesWidget extends WP_Widget {
 		//  Assigns values
 		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Last Changes', 'number' => '5', 'showpages' => true, 'showposts' => false, 'showauthor' => false ) );
 		$showauthor = strip_tags($instance['showauthor']);
-		$instance = wp_parse_args( (array) $instance, array( 'template' => list_last_changes_default_template($showauthor) ) );
+		$instance = wp_parse_args( (array) $instance, array( 'template' => list_last_changes_default_template((bool)$showauthor) ) );
 		$title = strip_tags($instance['title']);
 		$number = strip_tags($instance['number']);
 		$showpages = strip_tags($instance['showpages']);
@@ -149,12 +149,10 @@ class ListLastChangesWidget extends WP_Widget {
 
 	/**
 	 * Get Pages
+	 * @return WP_Post[]|false
 	 */
-	static function wp_get_pages($args = '') {
-		if ( is_array($args) )
-			$r =  &$args;
-		else
-			parse_str($args, $r);
+	static function wp_get_pages(array $args = array()) {
+		$r =  &$args;
 
 		$defaults = array('depth' => 0, 'show_date' => '', 'date_format' => get_option('date_format'),
 			'child_of' => 0, 'exclude' => "", 'title_li' => 'Pages', 'echo' => 1, 'authors' => '', 'sort_column' => 'menu_order, post_title');
@@ -176,7 +174,7 @@ class ListLastChangesWidget extends WP_Widget {
 	}
 }
 
-function list_last_changes_register_widgets() {
+function list_last_changes_register_widgets() : void {
 	register_widget( 'ListLastChangesWidget' );
 }
 
@@ -186,7 +184,7 @@ add_shortcode( 'list_last_changes', 'list_last_changes_shortcode_funct' );
 /**
  * Sort by modified date ascending
  */
-function sort_pages_by_date($a, $b) {
+function sort_pages_by_date(WP_Post $a, WP_Post $b) : int {
 	if ($a->post_modified == $b->post_modified)
 		return 0;
 	if ($a->post_modified < $b->post_modified)
@@ -197,7 +195,7 @@ function sort_pages_by_date($a, $b) {
 /**
  * Sort by modified date descending
  */
-function sort_pages_by_date_desc($a, $b) {
+function sort_pages_by_date_desc(WP_Post $a, WP_Post $b) : int {
 	return sort_pages_by_date($a, $b) * -1;
 }
 
@@ -209,29 +207,29 @@ add_action( 'wp_enqueue_scripts', 'list_last_changes_register_plugin_styles' );
 /**
  * Register style sheet.
  */
-function list_last_changes_register_plugin_styles() {
+function list_last_changes_register_plugin_styles() : void {
 	wp_register_style( 'list-last-changes', plugins_url( 'list-last-changes/css/list-last-changes.css' ) );
 	wp_enqueue_style( 'list-last-changes' );
 }
 
-function list_last_changes_shortcode_funct($atts ) {
+function list_last_changes_shortcode_funct(array|string $atts) : string {
 	$a = shortcode_atts( array(
 		'number' => '5',
 		'showpages' => 'true',
 		'showposts' => 'false',
 		'showauthor' => 'false',
 		'template' => '',
-	), $atts );
+	), $atts);
 
 	$number = empty($a['number']) ? ' ' : $a['number'];
 	$showpages = $a['showpages'] === 'true';
 	$showposts = $a['showposts'] === 'true';
 	$showauthor = $a['showauthor'] === 'true';
 	$template = empty($a['template']) ? list_last_changes_default_template($showauthor) : $a['template'];
-	return ListLastChangesWidget::generate_list($number, $showpages, $showposts, $template);
+	return ListLastChangesWidget::generate_list((int)$number, $showpages, $showposts, $template);
 }
 
-function list_last_changes_default_template($showauthor) {
+function list_last_changes_default_template(bool $showauthor) : string {
 	$template = "   {title}\n   {change_date}\n";
 	if($showauthor) {
 		$template = $template . "   {author}\n";
@@ -247,7 +245,7 @@ function list_last_changes_default_template($showauthor) {
  *
  * @return string Returns the post content with the last changes added.
  */
-function render_block_plugins_list_last_changes( $attributes ) {
+function render_block_plugins_list_last_changes(array $attributes) : string {
 	$args = array(
 		'number'      => $attributes['number'],
 		'showpages'   => $attributes['showpages'],
@@ -273,7 +271,7 @@ function render_block_plugins_list_last_changes( $attributes ) {
  *
  * Passes translations to JavaScript.
  */
-function list_last_changes_register_block() {
+function list_last_changes_register_block() : void {
 	if ( ! function_exists( 'register_block_type' ) ) {
 		// Gutenberg is not active.
 		return;
