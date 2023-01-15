@@ -66,11 +66,13 @@ class ListLastChangesWidget extends WP_Widget {
 		
 		$excludePages = ListLastChangesWidget::wp_get_pages(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'hierarchical' => 0));
 		$excludePageIds = "";
-		for($i = 0; $i < count($excludePages); $i++) {
-			if($i > 0) {
-				$excludePageIds = $excludePageIds . ",";
+		if(is_array($excludePages)) {
+			for($i = 0; $i < count($excludePages); $i++) {
+				if($i > 0) {
+					$excludePageIds = $excludePageIds . ",";
+				}
+				$excludePageIds = $excludePageIds . $excludePages[$i]->ID;
 			}
-			$excludePageIds = $excludePageIds . $excludePages[$i]->ID;
 		}
 
 		$excludePosts = get_posts(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'numberposts' => -1));
@@ -82,10 +84,22 @@ class ListLastChangesWidget extends WP_Widget {
 			$excludePostIds = $excludePostIds . $excludePosts[$i]->ID;
 		}
 
-		$mypages = $showpages ? ListLastChangesWidget::wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludePageIds)) : array();
-		usort($mypages, 'sort_pages_by_date_desc');
-		$myposts = $showposts ? get_posts(array('numberposts' => (int)$number, 'orderby' => 'modified', 'exclude' => array_map('intval', explode(',',$excludePostIds)))) : array();
-		usort($myposts, 'sort_pages_by_date_desc');
+		$mypages = array();
+		if($showpages) {
+			$mypages = ListLastChangesWidget::wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludePageIds));
+			if(is_array($mypages)) {
+				usort($mypages, 'sort_pages_by_date_desc');
+			} else {
+				$mypages = array();
+			}
+		}
+
+		$myposts = array();
+		if($showposts) {
+			$myposts = get_posts(array('numberposts' => (int)$number, 'orderby' => 'modified', 'exclude' => array_map('intval', explode(',',$excludePostIds))));
+			usort($myposts, 'sort_pages_by_date_desc');
+		}
+
 		$count = min(count($mypages) + count($myposts), $number);
 		$pagePos = 0;
 		$postPos = 0;
@@ -220,7 +234,7 @@ function list_last_changes_shortcode_funct(array|string $atts) : string {
 		'showposts' => 'false',
 		'showauthor' => 'false',
 		'template' => '',
-	), $atts);
+	), (array)$atts);
 
 	$number = empty($a['number']) ? ' ' : $a['number'];
 	$showpages = $a['showpages'] === 'true';
@@ -282,7 +296,7 @@ function list_last_changes_register_block() : void {
 		'list-last-changes',
 		plugins_url( 'block.js', __FILE__ ),
 		array( 'wp-blocks', 'wp-block-editor', 'wp-i18n', 'wp-element'/*, 'wp-components'*/ ),
-		filemtime( plugin_dir_path( __FILE__ ) . 'block.js' )
+		strval(filemtime( plugin_dir_path( __FILE__ ) . 'block.js' ))
 	);
 
 	register_block_type( 'plugins/list-last-changes', array(
