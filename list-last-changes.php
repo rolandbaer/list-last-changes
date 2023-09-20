@@ -116,9 +116,13 @@ class ListLastChangesWidget extends WP_Widget {
 				$postPos++;
 			}
 			setup_postdata($post);
+			$date_format = get_option('date_format');
+			if(!is_string($date_format)) {
+				$date_format = "";
+			}
 			$transitions = array(
 				"{title}" => '<a href="' . get_permalink( $post->ID ) .'">' . $post->post_title . "</a>",
-				"{change_date}" => '<span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>",
+				"{change_date}" => '<span class="list_last_changes_date">' . date_i18n($date_format ,strtotime($post->post_modified)) . "</span>",
 				"{author}" => '<span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , (int)$post->post_author ) . "</span>");
 			$entry = strtr($template, $transitions);
 			$content = $content . '  <li class="list_last_changes_title">'. "\n" ;
