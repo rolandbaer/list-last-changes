@@ -3,14 +3,14 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
  * License: GPLv3
  */
 
-/*  Copyright 2013-2022  Roland Bär  (email : info@rolandbaer.ch)
+/*  Copyright 2013-2023  Roland Bär  (email : info@rolandbaer.ch)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 3, as 
