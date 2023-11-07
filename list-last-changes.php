@@ -64,24 +64,18 @@ class ListLastChangesWidget extends WP_Widget {
 	public static function generate_list(int $number, bool $showpages, bool $showposts, string $template) : string {
 		$content = " <ul>\n";
 		
-		$excludePages = ListLastChangesWidget::wp_get_pages(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'hierarchical' => 0));
+		$loop = new WP_Query(array('post_type' => 'page', 'meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'numberposts' => -1));
 		$excludePageIds = "";
-		if(is_array($excludePages)) {
-			for($i = 0; $i < count($excludePages); $i++) {
-				if($i > 0) {
-					$excludePageIds = $excludePageIds . ",";
-				}
-				$excludePageIds = $excludePageIds . $excludePages[$i]->ID;
-			}
+		while( $loop->have_posts() ) {
+			$loop->the_post();
+			$excludePageIds = $excludePageIds . get_the_ID() . ",";
 		}
 
-		$excludePosts = get_posts(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'numberposts' => -1));
+		$loop = new WP_Query(array('post_type' => 'post', 'meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'numberposts' => -1));
 		$excludePostIds = "";
-		for($i = 0; $i < count($excludePosts); $i++) {
-			if($i > 0) {
-				$excludePostIds = $excludePostIds . ",";
-			}
-			$excludePostIds = $excludePostIds . $excludePosts[$i]->ID;
+		while( $loop->have_posts() ) {
+			$loop->the_post();
+			$excludePostIds = $excludePostIds . get_the_ID() . ",";
 		}
 
 		$mypages = array();
@@ -131,6 +125,9 @@ class ListLastChangesWidget extends WP_Widget {
 		}
 
 		$content = $content . " </ul>\n";
+
+		wp_reset_postdata();
+
 		return $content;
 	}
 
