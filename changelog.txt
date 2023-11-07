@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 0.8.7 =
+
+*Release date: October 24, 2020*
+
+* Bugfix for not using the right url of a blog post when permalink was customized
+
 = 0.8.6 =
 
 *Release date: October 8, 2020*

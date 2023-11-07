@@ -66,6 +66,12 @@ Sample templates:
 
 == Changelog ==
 
+= 1.0.2 =
+
+*Release date: November 07, 2023*
+
+* Bugfix for interference with other plugins. Uses now the method WP_Query to get the posts and pages to ignore
+
 = 1.0.1 =
 
 *Release date: September 05, 2022*
@@ -92,12 +98,6 @@ Sample templates:
 *Release date: November 29, 2020*
 
 * Introducing template mechanism in shortcode (also planned for widget and block)
-
-= 0.8.7 =
-
-*Release date: October 24, 2020*
-
-* Bugfix for not using the right url of a blog post when permalink was customized
 
 = Older releases =
 see [additional changelog.txt file](https://plugins.svn.wordpress.org/list-last-changes/trunk/changelog.txt)
