@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 0.9.5 =
+
+*Release date: December 08, 2020*
+
+* Introducing template mechanism in widget 
+* The configuration field 'show author' in the widget is replaced by the template mechanism
+
 = 0.9.0 =
 
 *Release date: November 29, 2020*

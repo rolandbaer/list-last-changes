@@ -1,12 +1,11 @@
-( function( blocks, blockEditor, i18n, element, components ) {
+( function( blocks, React, blockEditor, i18n, components ) {
 	var __ = i18n.__;
-	var el = element.createElement,
+	var el = React.createElement,
 		InspectorControls = blockEditor.InspectorControls,
 		PanelBody = components.PanelBody,
 		QueryControls = components.QueryControls,
 		TextControl = components.TextControl,
-		ToggleControl = components.ToggleControl,
-		ServerSideRender = wp.serverSideRender;
+		ToggleControl = components.ToggleControl;
 
 	blocks.registerBlockType( 'plugins/list-last-changes', {
 		title: __( 'List Last Changes' ),
@@ -39,7 +38,7 @@
 				type: 'string',
 				default: "{title} {change_date}",
 			},
-	},
+		},
 
 		edit: function( props ) {
 			const { attributes, setAttributes } = props;
@@ -49,9 +48,9 @@
 				props.setAttributes({showauthor: false, template: "{title} {change_date} {author}"});
 			}
 
-			const inspectorControls = el( 
-				InspectorControls, 
-				null, 
+			const inspectorControls = el(
+				InspectorControls,
+				{ key: 'inspectorControls' },
 				el(
 					PanelBody,
 					{ title: __( 'List Last Changes Settings' ) },
@@ -95,9 +94,10 @@
 
 			return [
 				inspectorControls,
-				el(ServerSideRender, {
+				el(wp.serverSideRender, {
 					block: "plugins/list-last-changes",
 					attributes: props.attributes,
+					key: 'serverSideRender'
 				}),
 			];
 		},
@@ -108,8 +108,8 @@
 	} );
 }(
 	window.wp.blocks,
+	window.React,
 	window.wp.blockEditor,
 	window.wp.i18n,
-	window.wp.element,
 	window.wp.components,
 ) );
