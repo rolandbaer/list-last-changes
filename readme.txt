@@ -3,10 +3,10 @@ Contributors: rbaer, osthafen
 Tags: last changes, pages, posts, widget, shortcode, block editor
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=PRW4QXZ3DHWL6&lc=GB&item_name=List%20Last%20Changes%20Plugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted
 Requires at least: 4.6.0
-Tested up to: 6.3
+Tested up to: 6.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 1.0.1
+Stable tag: 1.0.3
 
 Shows a list of the last changes of a WordPress site.
 
@@ -65,6 +65,18 @@ Sample templates:
 
 == Changelog ==
 
+= 1.0.3 =
+
+*Release date: November 08, 2023*
+
+* Bugfix for 1.0.2: removed refactorings (type information) that occured errors with some older php versions
+
+= 1.0.2 =
+
+*Release date: November 07, 2023*
+
+* Bugfix for interference with other plugins. Uses now the method WP_Query to get the posts and pages to ignore
+
 = 1.0.1 =
 
 *Release date: September 05, 2022*
@@ -85,18 +97,6 @@ Sample templates:
 
 * Introducing template mechanism in widget 
 * The configuration field 'show author' in the widget is replaced by the template mechanism
-
-= 0.9.0 =
-
-*Release date: November 29, 2020*
-
-* Introducing template mechanism in shortcode (also planned for widget and block)
-
-= 0.8.7 =
-
-*Release date: October 24, 2020*
-
-* Bugfix for not using the right url of a blog post when permalink was customized
 
 = Older releases =
 see [additional changelog.txt file](https://plugins.svn.wordpress.org/list-last-changes/trunk/changelog.txt)

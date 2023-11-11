@@ -3,14 +3,14 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 1.0.1
+ * Version: 1.0.3
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
  * License: GPLv3
  */
 
-/*  Copyright 2013-2022  Roland Bär  (email : info@rolandbaer.ch)
+/*  Copyright 2013-2023  Roland Bär  (email : info@rolandbaer.ch)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 3, as 
@@ -63,23 +63,19 @@ class ListLastChangesWidget extends WP_Widget {
 
 	public static function generate_list($number, $showpages, $showposts, $template) {
 		$content = " <ul>\n";
-		
-		$excludePages = ListLastChangesWidget::wp_get_pages(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'hierarchical' => 0));
+
+		$loop = new WP_Query(array('post_type' => 'page', 'meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'numberposts' => -1));
 		$excludePageIds = "";
-		for($i = 0; $i < count($excludePages); $i++) {
-			if($i > 0) {
-				$excludePageIds = $excludePageIds . ",";
-			}
-			$excludePageIds = $excludePageIds . $excludePages[$i]->ID;
+		while( $loop->have_posts() ) {
+			$loop->the_post();
+			$excludePageIds = $excludePageIds . get_the_ID() . ",";
 		}
 
-		$excludePosts = get_posts(array('meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'numberposts' => -1));
+		$loop = new WP_Query(array('post_type' => 'post', 'meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'numberposts' => -1));
 		$excludePostIds = "";
-		for($i = 0; $i < count($excludePosts); $i++) {
-			if($i > 0) {
-				$excludePostIds = $excludePostIds . ",";
-			}
-			$excludePostIds = $excludePostIds . $excludePosts[$i]->ID;
+		while( $loop->have_posts() ) {
+			$loop->the_post();
+			$excludePostIds = $excludePostIds . get_the_ID() . ",";
 		}
 
 		$mypages = $showpages ? ListLastChangesWidget::wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludePageIds)) : array();
@@ -113,6 +109,9 @@ class ListLastChangesWidget extends WP_Widget {
 		}
 
 		$content = $content . " </ul>\n";
+
+		wp_reset_postdata();
+
 		return $content;
 	}
 
