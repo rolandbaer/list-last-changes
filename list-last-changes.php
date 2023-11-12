@@ -3,7 +3,7 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
@@ -64,14 +64,14 @@ class ListLastChangesWidget extends WP_Widget {
 	public static function generate_list($number, $showpages, $showposts, $template) {
 		$content = " <ul>\n";
 
-		$loop = new WP_Query(array('post_type' => 'page', 'meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'numberposts' => -1));
+		$loop = new WP_Query(array('post_type' => 'page', 'meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'posts_per_page' => -1));
 		$excludePageIds = "";
 		while( $loop->have_posts() ) {
 			$loop->the_post();
 			$excludePageIds = $excludePageIds . get_the_ID() . ",";
 		}
 
-		$loop = new WP_Query(array('post_type' => 'post', 'meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'numberposts' => -1));
+		$loop = new WP_Query(array('post_type' => 'post', 'meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'posts_per_page' => -1));
 		$excludePostIds = "";
 		while( $loop->have_posts() ) {
 			$loop->the_post();

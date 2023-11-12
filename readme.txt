@@ -6,7 +6,7 @@ Requires at least: 4.6.0
 Tested up to: 6.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 
 Shows a list of the last changes of a WordPress site.
 
@@ -65,11 +65,17 @@ Sample templates:
 
 == Changelog ==
 
+= 1.0.5 =
+
+*Release date: November 12, 2023*
+
+* Bugfix for limit the ignored pages or posts to the number of posts per page (regression of 1.0.2).
+
 = 1.0.4 =
 
 *Release date: November 11, 2023*
 
-* Bugfixx for block editor support: adapted to changes in the block editor handling
+* Bugfix for block editor support: adapted to changes in the block editor handling
 
 = 1.0.3 =
 
@@ -88,14 +94,6 @@ Sample templates:
 *Release date: September 05, 2022*
 
 * Bugfix for exclude only up to five posts 
-
-= 1.0.0 =
-
-*Release date: December 09, 2020*
-
-* Introducing template mechanism in the block editor 
-* The configuration field 'show author' in the block editor is replaced by the template mechanism
-* The template mechanism is now "feature complete"
 
 = Older releases =
 see [additional changelog.txt file](https://plugins.svn.wordpress.org/list-last-changes/trunk/changelog.txt)

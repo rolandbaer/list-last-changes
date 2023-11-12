@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 1.0.0 =
+
+*Release date: December 09, 2020*
+
+* Introducing template mechanism in the block editor 
+* The configuration field 'show author' in the block editor is replaced by the template mechanism
+* The template mechanism is now "feature complete"
+
 = 0.9.5 =
 
 *Release date: December 08, 2020*
