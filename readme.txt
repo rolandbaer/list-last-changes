@@ -19,7 +19,7 @@ Additional features include:
 
 * Select the number of entries in the list
 * Define pages to be excluded
-* Show the author of the page/post
+* Show the author or the last editor of the page/post
 
 = Exclude page or post =
 To exclude a page or post from being listed in the widget do the following steps:
@@ -53,10 +53,11 @@ In difference to the widget, with the shortcode no title is written. If a title 
 
 = Templates =
 
-In the template string the following fields can be used: {title}, {change_date} and {author}.
+In the template string the following fields can be used: {title}, {change_date}, {author} and {editor}.
 {title} : the title of the page or post with a link to it
 {change_date} : the date the page or post was changed
 {author} : the author of the page or post
+{editor} : the last editor of the page or post
 
 Sample templates:
 {title} {change_date} : the default template
