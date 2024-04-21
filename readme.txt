@@ -66,6 +66,12 @@ Sample templates:
 
 == Changelog ==
 
+= 1.x.x =
+
+*Release date: <tbd>*
+
+* new field {editor} in the template string to show the last editor of the page or post
+
 = 1.0.5 =
 
 *Release date: November 12, 2023*
@@ -89,12 +95,6 @@ Sample templates:
 *Release date: November 07, 2023*
 
 * Bugfix for interference with other plugins. Uses now the method WP_Query to get the posts and pages to ignore
-
-= 1.0.1 =
-
-*Release date: September 05, 2022*
-
-* Bugfix for exclude only up to five posts 
 
 = Older releases =
 see [additional changelog.txt file](https://plugins.svn.wordpress.org/list-last-changes/trunk/changelog.txt)

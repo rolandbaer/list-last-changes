@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 1.0.1 =
+
+*Release date: September 05, 2022*
+
+* Bugfix for exclude only up to five posts 
+
 = 1.0.0 =
 
 *Release date: December 09, 2020*
