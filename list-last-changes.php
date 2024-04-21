@@ -101,7 +101,8 @@ class ListLastChangesWidget extends WP_Widget {
 			$transitions = array(
 				"{title}" => '<a href="' . get_permalink( $post->ID ) .'">' . $post->post_title . "</a>",
 				"{change_date}" => '<span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>",
-				"{author}" => '<span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , $post->post_author ) . "</span>");
+				"{author}" => '<span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , $post->post_author ) . "</span>",
+				"{editor}" => '<span class="list_last_changes_author">' . ListLastChangesWidget::get_last_editor($post) . "</span>");
 			$entry = strtr($template, $transitions);
 			$content = $content . '  <li class="list_last_changes_title">'. "\n" ;
 			$content = $content . $entry;
@@ -113,6 +114,16 @@ class ListLastChangesWidget extends WP_Widget {
 		wp_reset_postdata();
 
 		return $content;
+	}
+
+	static function get_last_editor($post) {
+		$last_editor_id = get_post_meta( $post->ID, '_edit_last', true );
+
+		if ( $last_editor_id ) {
+			$last_user = get_userdata( $last_editor_id );
+
+			return apply_filters( 'the_modified_author', $last_user ? $last_user->display_name : '' );
+		}
 	}
 
 	function update( $new_instance, $old_instance ) {
