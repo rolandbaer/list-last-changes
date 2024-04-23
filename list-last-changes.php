@@ -101,6 +101,7 @@ class ListLastChangesWidget extends WP_Widget {
 			$transitions = array(
 				"{title}" => '<a href="' . get_permalink( $post->ID ) .'">' . $post->post_title . "</a>",
 				"{change_date}" => '<span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>",
+				"{published_date}" => '<span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_date)) . "</span>",
 				"{author}" => '<span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , $post->post_author ) . "</span>",
 				"{editor}" => '<span class="list_last_changes_author">' . ListLastChangesWidget::get_last_editor($post) . "</span>");
 			$entry = strtr($template, $transitions);

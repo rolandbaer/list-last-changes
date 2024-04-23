@@ -53,9 +53,10 @@ In difference to the widget, with the shortcode no title is written. If a title 
 
 = Templates =
 
-In the template string the following fields can be used: {title}, {change_date}, {author} and {editor}.
+In the template string the following fields can be used: {title}, {change_date}, {published_date}, {author} and {editor}.
 {title} : the title of the page or post with a link to it
-{change_date} : the date the page or post was changed
+{change_date} : the date the page or post was changed ("modified date")
+{published_date} : the date the page or post was published ("post date")
 {author} : the author of the page or post
 {editor} : the last editor of the page or post
 
