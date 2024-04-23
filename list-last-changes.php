@@ -51,17 +51,18 @@ class ListLastChangesWidget extends WP_Widget {
 		$showpages = isset( $instance['showpages'] ) ? (bool) $instance['showpages'] : true;
 		$showposts = isset( $instance['showposts'] ) ? (bool) $instance['showposts'] : false;
 		$showauthor = isset( $instance['showauthor'] ) ? (bool) $instance['showauthor'] : false;
+		$usedatepublished = isset( $instance['usedatepublished'] ) ? (bool) $instance['usedatepublished'] : false;
 		$template = empty($instance['template']) ? list_last_changes_default_template($showauthor) : $instance['template'];
 
 		echo $args['before_widget'] . "\n";
 		if ( $title ) {
 			echo $args['before_title'] . $title . $args['after_title'] . "\n";
 		}
-		echo ListLastChangesWidget::generate_list($number, $showpages, $showposts, $template);
+		echo ListLastChangesWidget::generate_list($number, $showpages, $showposts, $usedatepublished, $template);
 		echo $args['after_widget'] . "\n";;
 	}
 
-	public static function generate_list($number, $showpages, $showposts, $template) {
+	public static function generate_list($number, $showpages, $showposts, $usedatepublished, $template) {
 		$content = " <ul>\n";
 
 		$loop = new WP_Query(array('post_type' => 'page', 'meta_key' => 'list_last_changes_ignore', 'meta_value' => 'true', 'posts_per_page' => -1));
@@ -78,22 +79,29 @@ class ListLastChangesWidget extends WP_Widget {
 			$excludePostIds = $excludePostIds . get_the_ID() . ",";
 		}
 
-		$mypages = $showpages ? ListLastChangesWidget::wp_get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'asc', 'show_date' => 'modified', 'hierarchical' => 0, 'exclude' => $excludePageIds)) : array();
-		usort($mypages, 'sort_pages_by_date_desc');
-		$myposts = $showposts ? get_posts(array('numberposts' => $number, 'orderby' => 'modified', 'exclude' => $excludePostIds)) : array();
-		usort($myposts, 'sort_pages_by_date_desc');
+		$mypages = $showpages ? ListLastChangesWidget::wp_get_pages(array('sort_column' => $usedatepublished ? 'post_date' : 'post_modified', 'sort_order' => 'asc', 'show_date' =>  $usedatepublished ? 'published' : 'modified', 'hierarchical' => 0, 'exclude' => $excludePageIds)) : array();
+		usort($mypages, $usedatepublished ? 'sort_pages_by_date_published_desc' : 'sort_pages_by_date_modified_desc');
+		$myposts = $showposts ? get_posts(array('numberposts' => $number, 'orderby' =>  $usedatepublished ? 'date' : 'modified', 'exclude' => $excludePostIds)) : array();
+		usort($myposts, $usedatepublished ? 'sort_pages_by_date_published_desc' : 'sort_pages_by_date_modified_desc');
 		$count = min(count($mypages) + count($myposts), $number);
 		$pagePos = 0;
 		$postPos = 0;
 		for($i = 0; $i < $count; $i++) {
-			$pageMod = $pagePos < count($mypages) ? $mypages[$pagePos]->post_modified : date("YYYY-MM-DD HH:MM:SS", 0);
-			$postMod = $postPos < count($myposts) ? $myposts[$postPos]->post_modified : date("YYYY-MM-DD HH:MM:SS", 0);
-			if($pageMod > $postMod) {
+			if($pagePos < count($mypages)) {
+				$pageDate = $usedatepublished ? $mypages[$pagePos]->post_date : $mypages[$pagePos]->post_modified;
+			} else {
+				$pageDate = date("YYYY-MM-DD HH:MM:SS", 0);
+			}
+			if($postPos < count($myposts)) {
+				$postDate = $usedatepublished ? $myposts[$postPos]->post_date : $myposts[$postPos]->post_modified;
+			} else {
+				$postDate = date("YYYY-MM-DD HH:MM:SS", 0);
+			}
+
+			if($pageDate > $postDate) {
 				$post = $mypages[$pagePos];
 				$pagePos++;
-			}
-			else
-			{
+			} else {
 				$post = $myposts[$postPos];
 				$postPos++;
 			}
@@ -133,6 +141,7 @@ class ListLastChangesWidget extends WP_Widget {
 		$instance['number'] = strip_tags($new_instance['number']);
 		$instance['showpages'] = isset( $new_instance['showpages'] ) ? (bool) $new_instance['showpages'] : false;
 		$instance['showposts'] = isset( $new_instance['showposts'] ) ? (bool) $new_instance['showposts'] : false;
+		$instance['usedatepublished'] = isset( $new_instance['usedatepublished'] ) ? (bool) $new_instance['usedatepublished'] : false;
 		$instance['template'] = strip_tags($new_instance['template']);
 		unset($instance['showauthor']);
 
@@ -141,19 +150,21 @@ class ListLastChangesWidget extends WP_Widget {
 
 	function form( $instance ) {
 		//  Assigns values
-		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Last Changes', 'number' => '5', 'showpages' => true, 'showposts' => false, 'showauthor' => false ) );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Last Changes', 'number' => '5', 'showpages' => true, 'showposts' => false, 'showauthor' => false, 'usedatepublished' => false ) );
 		$showauthor = strip_tags($instance['showauthor']);
 		$instance = wp_parse_args( (array) $instance, array( 'template' => list_last_changes_default_template($showauthor) ) );
 		$title = strip_tags($instance['title']);
 		$number = strip_tags($instance['number']);
 		$showpages = strip_tags($instance['showpages']);
 		$showposts = strip_tags($instance['showposts']);
+		$usedatepublished = strip_tags($instance['usedatepublished']);
 		$template = strip_tags($instance['template']);
 		?>
 			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo __('Title', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
 			<p><label for="<?php echo $this->get_field_id('number'); ?>"><?php echo __('Number of shown changes', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo esc_attr($number); ?>" /></label></p>
 			<p><input class="checkbox" id="<?php echo $this->get_field_id('showpages'); ?>" name="<?php echo $this->get_field_name('showpages'); ?>" type="checkbox" <?php checked( $showpages ); ?> /><label for="<?php echo $this->get_field_id('showpages'); ?>"><?php echo __('Show changed Pages', 'list-last-changes'); ?></label></p>
 			<p><input class="checkbox" id="<?php echo $this->get_field_id('showposts'); ?>" name="<?php echo $this->get_field_name('showposts'); ?>" type="checkbox" <?php checked( $showposts ); ?> /><label for="<?php echo $this->get_field_id('showposts'); ?>"><?php echo __('Show changed Posts', 'list-last-changes'); ?></label></p>
+			<p><input class="checkbox" id="<?php echo $this->get_field_id('usedatepublished'); ?>" name="<?php echo $this->get_field_name('usedatepublished'); ?>" type="checkbox" <?php checked( $usedatepublished ); ?> /><label for="<?php echo $this->get_field_id('usedatepublished'); ?>"><?php echo __('Use published date', 'list-last-changes'); ?></label></p>
 			<p><label for="<?php echo $this->get_field_id('template'); ?>"><?php echo __('Template', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('template'); ?>" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo esc_attr($template); ?>" /></label></p>
 		<?php
 	}
@@ -162,10 +173,11 @@ class ListLastChangesWidget extends WP_Widget {
 	 * Get Pages
 	 */
 	static function wp_get_pages($args = '') {
-		if ( is_array($args) )
+		if ( is_array($args) ) {
 			$r =  &$args;
-		else
+		} else {
 			parse_str($args, $r);
+		}
 
 		$defaults = array('depth' => 0, 'show_date' => '', 'date_format' => get_option('date_format'),
 			'child_of' => 0, 'exclude' => "", 'title_li' => 'Pages', 'echo' => 1, 'authors' => '', 'sort_column' => 'menu_order, post_title');
@@ -197,19 +209,41 @@ add_shortcode( 'list_last_changes', 'list_last_changes_shortcode_funct' );
 /**
  * Sort by modified date ascending
  */
-function sort_pages_by_date($a, $b) {
-	if ($a->post_modified == $b->post_modified)
+function sort_pages_by_date_modified($a, $b) {
+	if ($a->post_modified == $b->post_modified) {
 		return 0;
-	if ($a->post_modified < $b->post_modified)
+	}
+	if ($a->post_modified < $b->post_modified) {
 		return -1;
+	}
 	return 1;
 }
 
 /**
  * Sort by modified date descending
  */
-function sort_pages_by_date_desc($a, $b) {
-	return sort_pages_by_date($a, $b) * -1;
+function sort_pages_by_date_modified_desc($a, $b) {
+	return sort_pages_by_date_modified($a, $b) * -1;
+}
+
+/**
+ * Sort by published date ascending
+ */
+function sort_pages_by_date_published($a, $b) {
+	if ($a->post_date == $b->post_date) {
+		return 0;
+	}
+	if ($a->post_date < $b->post_date) {
+		return -1;
+	}
+	return 1;
+}
+
+/**
+ * Sort by published date descending
+ */
+function sort_pages_by_date_published_desc($a, $b) {
+	return sort_pages_by_date_published($a, $b) * -1;
 }
 
 /**
@@ -231,6 +265,7 @@ function list_last_changes_shortcode_funct($atts ) {
 		'showpages' => 'true',
 		'showposts' => 'false',
 		'showauthor' => 'false',
+		'usedatepublished' => 'false',
 		'template' => '',
 	), $atts );
 
@@ -238,8 +273,9 @@ function list_last_changes_shortcode_funct($atts ) {
 	$showpages = $a['showpages'] === 'true';
 	$showposts = $a['showposts'] === 'true';
 	$showauthor = $a['showauthor'] === 'true';
+	$usedatepublished = $a['usedatepublished'] === 'true';
 	$template = empty($a['template']) ? list_last_changes_default_template($showauthor) : $a['template'];
-	return ListLastChangesWidget::generate_list($number, $showpages, $showposts, $template);
+	return ListLastChangesWidget::generate_list($number, $showpages, $showposts, $usedatepublished, $template);
 }
 
 function list_last_changes_default_template($showauthor) {
@@ -260,20 +296,22 @@ function list_last_changes_default_template($showauthor) {
  */
 function render_block_plugins_list_last_changes( $attributes ) {
 	$args = array(
-		'number'      => $attributes['number'],
-		'showpages'   => $attributes['showpages'],
-		'showposts'   => $attributes['showposts'],
-		'showauthor'  => $attributes['showauthor'],
-		'template'    => $attributes['template'],
+		'number'           => $attributes['number'],
+		'showpages'        => $attributes['showpages'],
+		'showposts'        => $attributes['showposts'],
+		'showauthor'       => $attributes['showauthor'],
+		'usedatepublished' => $attributes['usedatepublished'],
+		'template'         => $attributes['template'],
 	);
 
 	$number = empty($args['number']) ? ' ' : $args['number'];
 	$showpages = $args['showpages'];
 	$showposts = $args['showposts'];
 	$showauthor = $args['showauthor'];
+	$usedatepublished = $args['usedatepublished'];
 	$template = empty($args['template']) ? list_last_changes_default_template($showauthor) : $args['template'];
 
-	$recentChanges = ListLastChangesWidget::generate_list($number, $showpages, $showposts, $template);
+	$recentChanges = ListLastChangesWidget::generate_list($number, $showpages, $showposts, $usedatepublished, $template);
 
 	return $recentChanges;
 }
@@ -298,25 +336,29 @@ function list_last_changes_register_block() {
 	);
 
 	register_block_type( 'plugins/list-last-changes', array(
-			'editor_script'   => 'list-last-changes',
-			'attributes'      => array(
-				'number'      => array(
+			'editor_script' => 'list-last-changes',
+			'attributes' => array(
+				'number' => array(
 					'type'    => 'number',
 					'default' => 5,
 				),
-				'showpages'   => array(
+				'showpages' => array(
 					'type'    => 'boolean',
 					'default' => true,
 				),
-				'showposts'   => array(
+				'showposts' => array(
 					'type'    => 'boolean',
 					'default' => false,
 				),
-				'showauthor'  => array(
+				'showauthor' => array(
 					'type'    => 'boolean',
 					'default' => false,
 				),
-				'template'    => array(
+				'usedatepublished' => array(
+					'type'    => 'boolean',
+					'default' => false,
+				),
+				'template' => array(
 					'type'    => 'string',
 					'default' => "{title} {change_date}"
 				),

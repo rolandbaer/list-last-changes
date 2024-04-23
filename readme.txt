@@ -42,11 +42,12 @@ In difference to the widget, with the block no title is written. If a title is n
 = Shortcode =
 To show the list of the last changes via shortcode use the following syntax:
 
-    [list_last_changes number='7' showpages='true' showposts='true' showauthor='false' template='{title} {change_date} {author}' /]
+    [list_last_changes number='7' showpages='true' showposts='true' showauthor='false' usedatepublished='true' template='{title} {change_date} {author}' /]
 
 The attribute 'number' defines the number of entries shown.
 With the attributes 'showpages' and 'showposts' changed pages and/or posts are included.
 To show also the author set the attribute 'showauthor' to true (deprecated, use template mechanism instead).
+With the attribute 'usedatepublished' set to 'true' the date when the page or post was first published, if set to 'false' (or not set at all) the date the page or post was modified is used.
 The 'template' attribute defines the content of the entries. If the 'template' attribute is defined the attribute 'showauthor' is ignored.
 
 In difference to the widget, with the shortcode no title is written. If a title is needed it has to be defined by hand in front of the shortcode.
