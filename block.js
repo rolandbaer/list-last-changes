@@ -34,6 +34,10 @@
 				type: 'boolean',
 				default: false,
 			},
+			usedatepublished: {
+				type: 'boolean',
+				default: false,
+			},
 			template: {
 				type: 'string',
 				default: "{title} {change_date}",
@@ -42,7 +46,7 @@
 
 		edit: function( props ) {
 			const { attributes, setAttributes } = props;
-			const { number, showpages, showposts, showauthor, template } = attributes;
+			const { number, showpages, showposts, showauthor, usedatepublished, template } = attributes;
 
 			if(showauthor === true && template === "{title} {change_date}") {
 				props.setAttributes({showauthor: false, template: "{title} {change_date} {author}"});
@@ -78,6 +82,16 @@
 							checked: showposts,
 							onChange: function() {
 								setAttributes( { showposts: !showposts } );
+							},
+						}
+					),
+					el(
+						ToggleControl,
+						{
+							label: __('Use published date'),
+							checked: usedatepublished,
+							onChange: function() {
+								setAttributes( { usedatepublished: !usedatepublished } );
 							},
 						}
 					),
