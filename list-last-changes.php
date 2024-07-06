@@ -167,6 +167,7 @@ class ListLastChangesWidget extends WP_Widget {
 			<p><input class="checkbox" id="<?php echo $this->get_field_id('usedatepublished'); ?>" name="<?php echo $this->get_field_name('usedatepublished'); ?>" type="checkbox" <?php checked( $usedatepublished ); ?> /><label for="<?php echo $this->get_field_id('usedatepublished'); ?>"><?php echo __('Use published date', 'list-last-changes'); ?></label></p>
 			<p><label for="<?php echo $this->get_field_id('template'); ?>"><?php echo __('Template', 'list-last-changes'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('template'); ?>" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo esc_attr($template); ?>" /></label></p>
 		<?php
+		return "show-form";
 	}
 
 	/**
