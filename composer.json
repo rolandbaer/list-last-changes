@@ -1,0 +1,14 @@
+{
+    "name": "rolandbaer/list-last-changes",
+    "description": "Shows a list of the last changes of a WordPress site.",
+    "license": "GPL-3.0-or-later",
+    "require-dev": {
+        "szepeviktor/phpstan-wordpress": "^1.1.6",
+        "phpstan/extension-installer": "^1.2"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
+    }
+}
