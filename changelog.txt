@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 1.0.2 =
+
+*Release date: November 07, 2023*
+
+* Bugfix for interference with other plugins. Uses now the method WP_Query to get the posts and pages to ignore
+
 = 1.0.1 =
 
 *Release date: September 05, 2022*

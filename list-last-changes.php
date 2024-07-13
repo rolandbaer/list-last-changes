@@ -3,7 +3,7 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
@@ -133,6 +133,8 @@ class ListLastChangesWidget extends WP_Widget {
 
 			return apply_filters( 'the_modified_author', $last_user ? $last_user->display_name : '' );
 		}
+
+		return '';
 	}
 
 	function update( $new_instance, $old_instance ) {
