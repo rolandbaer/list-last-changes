@@ -3,10 +3,10 @@ Contributors: rbaer, osthafen
 Tags: last changes, widget, shortcode, block editor
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=PRW4QXZ3DHWL6&lc=GB&item_name=List%20Last%20Changes%20Plugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted
 Requires at least: 4.6.0
-Tested up to: 6.5
+Tested up to: 6.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 
 Shows a list of the last changes of a WordPress site.
 
@@ -28,7 +28,7 @@ To exclude a page or post from being listed in the widget do the following steps
 1. Open the page or post you want to exclude for editing.
 2. Open the "Screen Options" (on the top right of the page)
 3. Ensure that "Custom Fields" is checked (see Screenshot #3)
-4. In the "Custom Fields" further down the screen add the following custom field (see  Screenshot #4):
+4. In the "Custom Fields" further down the screen add the following custom field (see Screenshot #4):
  * name: list_last_changes_ignore
  * value: true
 
@@ -69,6 +69,12 @@ Sample templates:
 
 == Changelog ==
 
+= 1.1.1 =
+
+*Release date: July 13, 2024*
+
+* Small quality fixes (from static code analyzer)
+
 = 1.1.0 =
 
 *Release date: April 23, 2024*
@@ -94,12 +100,6 @@ Sample templates:
 *Release date: November 08, 2023*
 
 * Bugfix for 1.0.2: removed refactorings (type information) that occured errors with some older php versions
-
-= 1.0.2 =
-
-*Release date: November 07, 2023*
-
-* Bugfix for interference with other plugins. Uses now the method WP_Query to get the posts and pages to ignore
 
 = Older releases =
 see [additional changelog.txt file](https://plugins.svn.wordpress.org/list-last-changes/trunk/changelog.txt)
