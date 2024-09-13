@@ -126,8 +126,36 @@ class ListLastChangesWidget extends WP_Widget {
 	}
 
 	static function get_last_editor($post) {
-		$last_editor_id = get_post_meta( $post->ID, '_edit_last', true );
+		$last_editor_id = null;
+		// first try: use metadata _edit_lock
+		$lock = get_post_meta( $post->ID, '_edit_lock', true );
+		if ( $lock ) {
+			$lock = explode( ':', $lock );
+			if (isset( $lock[1] )) {
+				$last_editor_id = $lock[1];
+			}
+		}
 
+		if( !$last_editor_id) {
+			// first fallback: use metadata _edit_last
+			$last_editor_id = get_post_meta( $post->ID, '_edit_last', true );
+		}
+
+		if( !$last_editor_id) {
+			// second fallback: get author of latest revision
+			$revisions = wp_get_post_revisions($post);
+			if(count($revisions) > 0) {
+				$rev = reset($revisions);
+				$last_editor_id = $rev->post_author;
+			}
+		}
+
+		if( !$last_editor_id) {
+			// last fallback: use post_author
+			$last_editor_id = $post->post_author;
+		}
+
+		// finally get the display name of the user
 		if ( $last_editor_id ) {
 			$last_user = get_userdata( $last_editor_id );
 
