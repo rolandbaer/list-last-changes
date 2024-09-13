@@ -6,7 +6,7 @@ Requires at least: 4.6.0
 Tested up to: 6.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 
 Shows a list of the last changes of a WordPress site.
 
@@ -69,6 +69,12 @@ Sample templates:
 
 == Changelog ==
 
+= 1.1.2 =
+
+*Release date: September 13, 2024*
+
+* fix for wrong user name of editor field under some circumstances
+
 = 1.1.1 =
 
 *Release date: July 13, 2024*
@@ -94,12 +100,6 @@ Sample templates:
 *Release date: November 11, 2023*
 
 * Bugfix for block editor support: adapted to changes in the block editor handling
-
-= 1.0.3 =
-
-*Release date: November 08, 2023*
-
-* Bugfix for 1.0.2: removed refactorings (type information) that occured errors with some older php versions
 
 = Older releases =
 see [additional changelog.txt file](https://plugins.svn.wordpress.org/list-last-changes/trunk/changelog.txt)
