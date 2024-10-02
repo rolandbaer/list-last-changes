@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 1.0.4 =
+
+*Release date: November 11, 2023*
+
+* Bugfix for block editor support: adapted to changes in the block editor handling
+
 = 1.0.3 =
 
 *Release date: November 08, 2023*
