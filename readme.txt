@@ -6,7 +6,7 @@ Requires at least: 4.6.0
 Tested up to: 6.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 1.1.2
+Stable tag: 1.2.0
 
 Shows a list of the last changes of a WordPress site.
 
@@ -57,17 +57,27 @@ In difference to the widget, with the shortcode no title is written. If a title 
 
 In the template string the following fields can be used: {title}, {change_date}, {published_date}, {author} and {editor}.
 {title} : the title of the page or post with a link to it
-{change_date} : the date the page or post was changed ("modified date")
-{published_date} : the date the page or post was published ("post date")
+{change_date} or {change_date[format]} : the date the page or post was changed ("modified date")
+{published_date} or {published_date[format]} : the date the page or post was published ("post date")
 {author} : the author of the page or post
 {editor} : the last editor of the page or post
 
+With the optional [format] the date format of change_date and published_date can be defined. The date format is in the php date formatting.
+Without definition the wordpress system date format is used.
+
 Sample templates:
 {title} {change_date} : the default template
+{title} {change_date[Y-m-d H:i]} : like the default template but with date and time defined by the given format
 {title} {change_date} {author} : behaves as in versions before 0.9 when show author was enabled
 {change_date} : shows only the change_date, can be used with number = 1 as last modified date of a WordPress Site
 
 == Changelog ==
+
+= 1.2.0 =
+
+*Release date: October 02, 2024*
+
+* fields {change_date} and {published_date} with optional date format
 
 = 1.1.2 =
 
@@ -94,12 +104,6 @@ Sample templates:
 *Release date: November 12, 2023*
 
 * Bugfix for limit the ignored pages or posts to the number of posts per page (regression of 1.0.2).
-
-= 1.0.4 =
-
-*Release date: November 11, 2023*
-
-* Bugfix for block editor support: adapted to changes in the block editor handling
 
 = Older releases =
 see [additional changelog.txt file](https://plugins.svn.wordpress.org/list-last-changes/trunk/changelog.txt)

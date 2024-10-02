@@ -3,7 +3,7 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 1.1.2
+ * Version: 1.2.0
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
@@ -108,11 +108,13 @@ class ListLastChangesWidget extends WP_Widget {
 			setup_postdata($post);
 			$transitions = array(
 				"{title}" => '<a href="' . get_permalink( $post->ID ) .'">' . $post->post_title . "</a>",
-				"{change_date}" => '<span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_modified)) . "</span>",
-				"{published_date}" => '<span class="list_last_changes_date">' . date_i18n(get_option('date_format') ,strtotime($post->post_date)) . "</span>",
-				"{author}" => '<span class="list_last_changes_author">' . get_the_author_meta( 'display_name' , $post->post_author ) . "</span>",
+				"{change_date}" => '<span class="list_last_changes_date">' . date_i18n(get_option('date_format'), strtotime($post->post_modified)) . "</span>",
+				"{published_date}" => '<span class="list_last_changes_date">' . date_i18n(get_option('date_format'), strtotime($post->post_date)) . "</span>",
+				"{author}" => '<span class="list_last_changes_author">' . get_the_author_meta( 'display_name', $post->post_author ) . "</span>",
 				"{editor}" => '<span class="list_last_changes_author">' . ListLastChangesWidget::get_last_editor($post) . "</span>");
 			$entry = strtr($template, $transitions);
+			$entry = ListLastChangesWidget::replace_date_format("change_date", $entry, strtotime($post->post_modified));
+			$entry = ListLastChangesWidget::replace_date_format("published_date", $entry, strtotime($post->post_date));
 			$content = $content . '  <li class="list_last_changes_title">'. "\n" ;
 			$content = $content . $entry;
 			$content = $content . "  </li>\n";
@@ -123,6 +125,15 @@ class ListLastChangesWidget extends WP_Widget {
 		wp_reset_postdata();
 
 		return $content;
+	}
+
+	public static function replace_date_format($date_name, $input, $date_time) {
+		$pattern = "/\{$date_name\[([^\]]*)\]\}/i";
+		if(preg_match($pattern, $input, $matches)) {
+			$input = preg_replace($pattern, date_i18n("$matches[1]", $date_time), $input);
+		}
+
+		return $input;
 	}
 
 	static function get_last_editor($post) {
