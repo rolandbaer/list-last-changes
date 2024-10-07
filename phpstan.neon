@@ -1,5 +1,5 @@
 parameters:
   level: 4
   paths:
-    - list-last-changes.php
+    - src/list-last-changes.php
   checkMissingIterableValueType: false
