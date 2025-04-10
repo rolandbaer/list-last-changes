@@ -71,6 +71,12 @@ Sample templates:
 {title} {change_date} {author} : behaves as in versions before 0.9 when show author was enabled
 {change_date} : shows only the change_date, can be used with number = 1 as last modified date of a WordPress Site
 
+= How can I report security bugs? =
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/list-last-changes)
+
+Or you send them directly to [mailto:info@rolandbaer.ch](mailto:info@rolandbaer.ch).
+
 == Changelog ==
 
 = 1.2.0 =
