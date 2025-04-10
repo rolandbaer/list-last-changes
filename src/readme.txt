@@ -3,7 +3,7 @@ Contributors: rbaer, osthafen
 Tags: last changes, widget, shortcode, block editor
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=PRW4QXZ3DHWL6&lc=GB&item_name=List%20Last%20Changes%20Plugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted
 Requires at least: 4.6.0
-Tested up to: 6.6
+Tested up to: 6.7
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Stable tag: 1.2.0
@@ -73,6 +73,12 @@ Sample templates:
 
 == Changelog ==
 
+= 1.2.1 =
+
+*Release date: April 16, 2025*
+
+* fixed XSS vulnerability
+
 = 1.2.0 =
 
 *Release date: October 02, 2024*
@@ -98,12 +104,6 @@ Sample templates:
 * Configuration to select and order the pages and/or posts by date modified or date published
 * new field {published_date} in the template string to show the date the page or post was published ("post date")
 * new field {editor} in the template string to show the last editor of the page or post
-
-= 1.0.5 =
-
-*Release date: November 12, 2023*
-
-* Bugfix for limit the ignored pages or posts to the number of posts per page (regression of 1.0.2).
 
 = Older releases =
 see [additional changelog.txt file](https://plugins.svn.wordpress.org/list-last-changes/trunk/changelog.txt)

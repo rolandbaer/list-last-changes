@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 1.0.5 =
+
+*Release date: November 12, 2023*
+
+* Bugfix for limit the ignored pages or posts to the number of posts per page (regression of 1.0.2).
+
 = 1.0.4 =
 
 *Release date: November 11, 2023*

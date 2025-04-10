@@ -3,14 +3,14 @@
  * Plugin Name: List Last Changes
  * Plugin URI: http://www.rolandbaer.ch/software/wordpress/plugin-last-changes/
  * Description: Shows a list of the last changes of a WordPress site.
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: Roland Bär
  * Author URI: http://www.rolandbaer.ch/
  * Text Domain: list-last-changes
  * License: GPLv3
  */
 
-/*  Copyright 2013-2024  Roland Bär  (email : info@rolandbaer.ch)
+/*  Copyright 2013-2025  Roland Bär  (email : info@rolandbaer.ch)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 3, as 
@@ -112,7 +112,7 @@ class ListLastChangesWidget extends WP_Widget {
 				"{published_date}" => '<span class="list_last_changes_date">' . date_i18n(get_option('date_format'), strtotime($post->post_date)) . "</span>",
 				"{author}" => '<span class="list_last_changes_author">' . get_the_author_meta( 'display_name', $post->post_author ) . "</span>",
 				"{editor}" => '<span class="list_last_changes_author">' . ListLastChangesWidget::get_last_editor($post) . "</span>");
-			$entry = strtr($template, $transitions);
+			$entry = esc_attr(strtr($template, $transitions));
 			$entry = ListLastChangesWidget::replace_date_format("change_date", $entry, strtotime($post->post_modified));
 			$entry = ListLastChangesWidget::replace_date_format("published_date", $entry, strtotime($post->post_date));
 			$content = $content . '  <li class="list_last_changes_title">'. "\n" ;
