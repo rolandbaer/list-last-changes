@@ -6,7 +6,7 @@ Requires at least: 4.6.0
 Tested up to: 6.7
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 1.2.0
+Stable tag: 1.2.2
 
 Shows a list of the last changes of a WordPress site.
 
@@ -73,6 +73,12 @@ Sample templates:
 
 == Changelog ==
 
+= 1.2.2 =
+
+*Release date: April 17, 2025*
+
+* fixed bug introduced with XSS vulnerability fix in 1.2.1
+
 = 1.2.1 =
 
 *Release date: April 16, 2025*
@@ -96,14 +102,6 @@ Sample templates:
 *Release date: July 13, 2024*
 
 * Small quality fixes (from static code analyzer)
-
-= 1.1.0 =
-
-*Release date: April 23, 2024*
-
-* Configuration to select and order the pages and/or posts by date modified or date published
-* new field {published_date} in the template string to show the date the page or post was published ("post date")
-* new field {editor} in the template string to show the last editor of the page or post
 
 = Older releases =
 see [additional changelog.txt file](https://plugins.svn.wordpress.org/list-last-changes/trunk/changelog.txt)
