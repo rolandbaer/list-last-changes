@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 1.1.0 =
+
+*Release date: April 23, 2024*
+
+* Configuration to select and order the pages and/or posts by date modified or date published
+* new field {published_date} in the template string to show the date the page or post was published ("post date")
+* new field {editor} in the template string to show the last editor of the page or post
+
 = 1.0.5 =
 
 *Release date: November 12, 2023*
