@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 1.1.1 =
+
+*Release date: July 13, 2024*
+
+* Small quality fixes (from static code analyzer)
+
 = 1.1.0 =
 
 *Release date: April 23, 2024*
